@@ -28,6 +28,7 @@ public class AsfFileReader extends AudioFileReader {
 			info.setEncodingType("ASF (audio): " + header.getAudioStreamChunk().getCodecDescription());
 			info.setPreciseLength(header.getFileHeader().getPreciseDuration());
 			info.setSamplingRate((int) header.getAudioStreamChunk().getSamplingRate());
+			info.setVbr(header.getExtendedContentDescription().isVBR());
 		} catch (Exception e) {
 			if (e instanceof IOException)
 				throw (IOException) e;

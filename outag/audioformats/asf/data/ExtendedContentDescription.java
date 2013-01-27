@@ -132,6 +132,11 @@ public class ExtendedContentDescription extends Chunk {
         return (result == null) ? "" : result.getString();
     }
     
+    public boolean isVBR() {
+    	ContentDescriptor result = getDescriptor("IsVBR");
+    	return result == null ? false : result.getBoolean();
+    }
+    
     /** Removes the content descriptor with the given name. <br>
      * @param id The id (name) of the descriptor which should be removed.
      * @return The descriptor which is removed. If not present <code>null</code>. */

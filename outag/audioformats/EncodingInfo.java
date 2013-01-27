@@ -40,7 +40,7 @@ public class EncodingInfo {
 		content.put(FIELD_INFOS, "");
 		content.put(FIELD_SAMPLERATE, new Integer(-1));
 		content.put(FIELD_LENGTH, new Float(-1));
-		content.put(FIELD_VBR, new Boolean(true));
+		content.put(FIELD_VBR, new Boolean(false));
 	}
 
 	public int getBitrate() { return (Integer) content.get(FIELD_BITRATE); }
