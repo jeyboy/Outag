@@ -9,6 +9,7 @@ import outag.audioformats.flac.FlacFileReader;
 import outag.audioformats.generic.AudioFileReader;
 import outag.audioformats.generic.Utils;
 import outag.audioformats.mp3.Mp3FileReader;
+import outag.audioformats.mp4.Mp4FileReader;
 import outag.audioformats.mpc.MpcFileReader;
 import outag.audioformats.ogg.OggFileReader;
 import outag.audioformats.wav.WavFileReader;
@@ -68,6 +69,9 @@ public class AudioFileIO {
 		if (reader == null)
 			switch (ext) {
 				case "mp3":	readers.put(ext, (reader = new Mp3FileReader()));	break;
+				case "mp4":
+				case "m4a":
+					readers.put(ext, (reader = new Mp4FileReader()));	break;
 				case "ogg": readers.put(ext, (reader = new OggFileReader()));	break;
 				case "flac": readers.put(ext, (reader = new FlacFileReader()));	break; 
 				case "ape": readers.put(ext, (reader = new MonkeyFileReader()));	break;
