@@ -25,18 +25,20 @@ import outag.audioformats.wav.WavFileReader;
  * </p>
  * <p>
  * <code>
- *		AudioFile audioFile = AudioFileIO.read(new File("audiofile.mp3"));<br/>
- *		audioFile.getTag().setGenre("Progressive Rock");<br/>
- *		audioFile.commit(); //Write the modifications in the file on disk.<br/>
+ * 		AudioFileIO reader = new AudioFileIO(true); // Cache on
+ *		AudioFile audioFile = reader.readFile(new File("audiofile.mp3"));<br/>
+ *		String artist = audioFile.getTag().getArtist(); //Retreive the artist name.<br/>
  *	</code>
- * </p>
+ * </p> 
  */
 public class AudioFileIO {
+	private boolean cacheReader = false;
+	private Hashtable<String, AudioFileReader> readers = new Hashtable<String, AudioFileReader>();
 	private static AudioFileIO defaultInstance;
 
 	/** @return the default instance for static use. */
 	public static AudioFileIO getDefaultAudioFileIO() {
-		if (defaultInstance == null) defaultInstance = new AudioFileIO();
+		if (defaultInstance == null) defaultInstance = new AudioFileIO(true);
 		return defaultInstance;
 	}
 
@@ -45,24 +47,10 @@ public class AudioFileIO {
 	 * @return The AudioFile with the file tag and the file encoding info.
 	 * @exception CannotReadException - If the file could not be read, the
 	 * extension wasn't recognized, or an IO error occurs during the read.*/
-	public static AudioFile read(File f) throws CannotReadException { return getDefaultAudioFileIO().readFile(f); }
+	public static AudioFile read(File f) throws CannotReadException { return new AudioFileIO().readFile(f); }
 
-	private Hashtable<String, AudioFileReader> readers = new Hashtable<String, AudioFileReader>();
-
-	public AudioFileIO() { prepareReaders(); }
-
-	/** Creates the readers. */
-	private void prepareReaders() {
-		// Tag Readers
-		readers.put("mp3", new Mp3FileReader());
-		readers.put("ogg", new OggFileReader());
-		readers.put("flac", new FlacFileReader());
-		readers.put("wav", new WavFileReader());
-		readers.put("mpc", new MpcFileReader());
-		readers.put("mp+", readers.get("mpc"));
-		readers.put("ape", new MonkeyFileReader());
-		readers.put("wma", new AsfFileReader());
-	}
+	public AudioFileIO() { }
+	public AudioFileIO(boolean cache) { cacheReader = cache; }
 
 	/** Read the tag contained in the given file.
 	 * @param f - the file to read.
@@ -71,12 +59,25 @@ public class AudioFileIO {
 	 * extension wasn't recognized, or an IO error occurred during the read. */
 	public AudioFile readFile(File f) throws CannotReadException {
 		String ext = Utils.getExtension(f);
+		AudioFileReader reader = null;
+		
+		if (cacheReader)
+			if (readers.contains(ext))
+				reader = (AudioFileReader)readers.get(ext);
 
-		Object afr = readers.get(ext);
-		if (afr == null)
-			throw new CannotReadException(
-					"No Reader associated to this extension: " + ext);
+		if (reader == null)
+			switch (ext) {
+				case "mp3":	readers.put(ext, (reader = new Mp3FileReader()));	break;
+				case "ogg": readers.put(ext, (reader = new OggFileReader()));	break;
+				case "flac": readers.put(ext, (reader = new FlacFileReader()));	break; 
+				case "ape": readers.put(ext, (reader = new MonkeyFileReader()));	break;
+				case "wav": readers.put(ext, (reader = new WavFileReader()));	break;
+				case "wma": readers.put(ext, (reader = new AsfFileReader()));	break;
+				case "mpc":
+				case "mp+": readers.put(ext, (reader = new MpcFileReader()));	break;
+				default: throw new CannotReadException("No Reader associated to this extension: " + ext); 
+			}
 
-		return ((AudioFileReader) afr).read(f);
+		return reader.read(f);
 	}
 }

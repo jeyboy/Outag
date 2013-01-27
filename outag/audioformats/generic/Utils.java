@@ -3,25 +3,7 @@ package outag.audioformats.generic;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 
-public class Utils {
-	public boolean accept(File f) {
-		if(f.isDirectory() || !f.canRead())
-			return false;
-		
-		String ext = Utils.getExtension(f);
-		if( ext.equals("mp3") ||
-			ext.equals("flac")||
-			ext.equals("ogg") ||
-			ext.equals("mpc") ||
-			ext.equals("mp+") ||
-			ext.equals("ape") ||
-			ext.equals("wav") || 
-			ext.equals("wma") )
-			return true;	
-
-		return false;
-	}	
-	
+public class Utils {	
 	/** Copies the bytes of <code>srd</code> to <code>dst</code> at the specified offset.
 	 * @param src - The byte do be copied.
 	 * @param dst - The array to copy to
