@@ -88,6 +88,17 @@ public class AsfHeader extends Chunk {
 		}
 		return result;
 	}
+	
+	/** @param encChunk The encodingChunk to set. */
+	public void setEncodingChunk(EncodingChunk encChunk) {
+		if (encChunk == null)
+			throw new IllegalArgumentException("Argument must not be null.");
+		this.encodingChunk = encChunk;
+	}
+	
+	public void setStreamBitratePropertiesChunk(StreamBitratePropertiesChunk streamBitratePropertiesChunk1) {
+		this.streamBitratePropertiesChunk = streamBitratePropertiesChunk1;
+	}	
 
 	/** @return Returns the chunkCount.	 */
 	public long getChunkCount() { return chunkCount; }
@@ -139,25 +150,13 @@ public class AsfHeader extends Chunk {
 	/** @param contentDesc sets the contentDescription. <code>null</code> deletes the chunk. */
 	public void setContentDescription(ContentDescription contentDesc) { this.contentDescription = contentDesc; }
 
-	/** @param encChunk The encodingChunk to set. */
-	public void setEncodingChunk(EncodingChunk encChunk) {
-		if (encChunk == null)
-			throw new IllegalArgumentException("Argument must not be null.");
-		this.encodingChunk = encChunk;
-	}
-
 	/** @param th sets the extendedContentDescription. <code>null</code> delete the chunk. */
 	public void setExtendedContentDescription(ExtendedContentDescription th) {
 		this.extendedContentDescription = th;
 	}
 
 	public void setFileHeader(FileHeader fh) {
-		if (fh == null)
-			throw new IllegalArgumentException("Argument must not be null.");
+		if (fh == null)	throw new IllegalArgumentException("Argument must not be null.");
 		this.fileHeader = fh;
-	}
-
-	public void setStreamBitratePropertiesChunk(StreamBitratePropertiesChunk streamBitratePropertiesChunk1) {
-		this.streamBitratePropertiesChunk = streamBitratePropertiesChunk1;
 	}
 }

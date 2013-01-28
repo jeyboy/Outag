@@ -24,6 +24,7 @@ public class AsfFileReader extends AudioFileReader {
 								+ "incorrect for interpretation as asf with wma content.");
 			}
 			info.setBitrate(header.getAudioStreamChunk().getKbps());
+			info.setCompressionType(header.getAudioStreamChunk().getCompressionDescription());
 			info.setChannelNumber((int) header.getAudioStreamChunk().getChannelCount());
 			info.setEncodingType("ASF (audio): " + header.getAudioStreamChunk().getCodecDescription());
 			info.setPreciseLength(header.getFileHeader().getPreciseDuration());

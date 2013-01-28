@@ -24,6 +24,9 @@ public class EncodingInfo {
 
 	/** Key for the audio type.({@link String}) */
 	public final static String FIELD_TYPE = "TYPE";
+	
+	/** Key for the audio compression.({@link String}) */
+	public final static String FIELD_COMPRESSION = "COMPRESSION";	
 
 	/** Key for the VBR flag. ({@link Boolean}) */
 	public final static String FIELD_VBR = "VBR";
@@ -37,6 +40,7 @@ public class EncodingInfo {
 		content.put(FIELD_BITRATE, new Integer(-1));
 		content.put(FIELD_CHANNEL, new Integer(-1));
 		content.put(FIELD_TYPE, "");
+		content.put(FIELD_COMPRESSION, "");
 		content.put(FIELD_INFOS, "");
 		content.put(FIELD_SAMPLERATE, new Integer(-1));
 		content.put(FIELD_LENGTH, new Float(-1));
@@ -50,7 +54,10 @@ public class EncodingInfo {
 	public void setChannelNumber(int chanNb) { content.put(FIELD_CHANNEL, new Integer(chanNb));	}	
 	
 	public String getEncodingType() { return (String) content.get(FIELD_TYPE); }
-	public void setEncodingType(String encodingType) { content.put(FIELD_TYPE, encodingType); }	
+	public void setEncodingType(String encodingType) { content.put(FIELD_TYPE, encodingType); }
+	
+	public String getCompressionType() { return (String) content.get(FIELD_COMPRESSION); }
+	public void setCompressionType(String compression) { content.put(FIELD_COMPRESSION, compression); }	
 	
 	public String getExtraEncodingInfos() { return (String) content.get(FIELD_INFOS); }
 	public void setExtraEncodingInfos(String infos) { content.put(FIELD_INFOS, infos); }	

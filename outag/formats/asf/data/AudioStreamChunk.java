@@ -12,6 +12,17 @@ public class AudioStreamChunk extends StreamChunk {
             { "163", "(Windows Media Audio 9 series (Lossless))" },
             { "7A21", " (GSM-AMR (CBR))" }, { "7A22", " (GSM-AMR (VBR))" } };
 
+    /** codec number for WMA */
+    public final static long WMA = 0x161;
+    /** codec number for WMA (CBR) */
+    public final static long WMA_CBR = 0x7A21;
+    /** codec number for WMA_LOSSLESS */
+    public final static long WMA_LOSSLESS = 0x163;
+    /** codec number for WMA_PRO */
+    public final static long WMA_PRO = 0x162;
+    /** codec number for WMA (VBR) */
+    public final static long WMA_VBR = 0x7A22;    
+    
     /** Stores the average amount of bytes used by audio stream. <br>
      * This value is a field within type specific data of audio stream. Maybe it
      * could be used to calculate the kbps. */
@@ -71,7 +82,7 @@ public class AudioStreamChunk extends StreamChunk {
     public byte[] getCodecData() 						{ return codecData; }
     /** Sets the codecData<br>
      * @param codecSpecificData */
-    public void setCodecData(byte[] codecSpecificData) 	{ this.codecData = codecSpecificData; }    
+    public void setCodecData(byte[] codecSpecificData) 	{ this.codecData = codecSpecificData; }
 
     /** This method will take a look at {@link #compressionFormat}and returns a
      * String with its hex value and if known a textual note on what coded it
@@ -96,6 +107,14 @@ public class AudioStreamChunk extends StreamChunk {
 
     /** @return Returns the compressionFormat. */
     public long getCompressionFormat() 					{ return compressionFormat; }
+    public String getCompressionDescription()			{
+    	if (compressionFormat == WMA) 				return "simple";
+    	if (compressionFormat == WMA_CBR) 			return "constant bitrate";
+    	if (compressionFormat == WMA_LOSSLESS)	 	return "lossless";
+    	if (compressionFormat == WMA_PRO)			return "pro";
+    	if (compressionFormat == WMA_VBR)			return "variable bitrate";
+    	return "unknow";
+    }    
     /** @param cFormatCode The compressionFormat to set. */
     public void setCompressionFormat(long cFormatCode) 	{ this.compressionFormat = cFormatCode; }    
 
