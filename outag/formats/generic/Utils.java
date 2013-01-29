@@ -1,7 +1,10 @@
 package outag.formats.generic;
 
+import java.io.DataInput;
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 
 public class Utils {	
 	/** Copies the bytes of <code>srd</code> to <code>dst</code> at the specified offset.
@@ -83,4 +86,73 @@ public class Utils {
 	public static byte[] getUTF8Bytes(String s)	throws UnsupportedEncodingException {
 		return s.getBytes("UTF-8");
 	}
+	
+    public static int readUint32AsInt(DataInput di) throws IOException
+    {
+        final long l = readUint32(di);
+        if (l > Integer.MAX_VALUE)
+        {
+            throw new IOException("uint32 value read overflows int");
+        }
+        return (int) l;
+    }
+
+    public static long readUint32(DataInput di) throws IOException
+    {
+        final byte[] buf8 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+        di.readFully(buf8, 4, 4);
+        final long l = ByteBuffer.wrap(buf8).getLong();
+        return l;
+    }
+
+    public static int readUint16(DataInput di) throws IOException
+    {
+        final byte[] buf = {0x00, 0x00, 0x00, 0x00};
+        di.readFully(buf, 2, 2);
+        final int i = ByteBuffer.wrap(buf).getInt();
+        return i;
+    }
+
+    public static String readString(DataInput di, int charsToRead) throws IOException
+    {
+        final byte[] buf = new byte[charsToRead];
+        di.readFully(buf);
+        return new String(buf);
+    }
+
+    public static long readUInt64(ByteBuffer b)
+    {
+        long result = 0;
+        result += (readUBEInt32(b) << 32);
+        result += readUBEInt32(b);
+        return result;
+    }
+
+    public static int readUBEInt32(ByteBuffer b)
+    {
+        int result = 0;
+        result += readUBEInt16(b) << 16;
+        result += readUBEInt16(b);
+        return result;
+    }
+
+    public static int readUBEInt24(ByteBuffer b)
+    {
+        int result = 0;
+        result += readUBEInt16(b) << 16;
+        result += readUInt8(b);
+        return result;
+    }
+
+    public static int readUBEInt16(ByteBuffer b)
+    {
+        int result = 0;
+        result += readUInt8(b) << 8;
+        result += readUInt8(b);
+        return result;
+    }
+
+    public static int readUInt8(ByteBuffer b) { return read(b); }
+    
+    public static int read(ByteBuffer b) { return (b.get() & 0xFF); }    
 }

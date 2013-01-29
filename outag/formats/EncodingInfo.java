@@ -40,7 +40,7 @@ public class EncodingInfo {
 		content.put(FIELD_BITRATE, new Integer(-1));
 		content.put(FIELD_CHANNEL, new Integer(-1));
 		content.put(FIELD_TYPE, "");
-		content.put(FIELD_COMPRESSION, "");
+		content.put(FIELD_COMPRESSION, "Unknow");
 		content.put(FIELD_INFOS, "");
 		content.put(FIELD_SAMPLERATE, new Integer(-1));
 		content.put(FIELD_LENGTH, new Float(-1));

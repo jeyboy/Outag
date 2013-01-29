@@ -108,12 +108,12 @@ public class AudioStreamChunk extends StreamChunk {
     /** @return Returns the compressionFormat. */
     public long getCompressionFormat() 					{ return compressionFormat; }
     public String getCompressionDescription()			{
-    	if (compressionFormat == WMA) 				return "simple";
-    	if (compressionFormat == WMA_CBR) 			return "constant bitrate";
-    	if (compressionFormat == WMA_LOSSLESS)	 	return "lossless";
-    	if (compressionFormat == WMA_PRO)			return "pro";
-    	if (compressionFormat == WMA_VBR)			return "variable bitrate";
-    	return "unknow";
+    	if (compressionFormat == WMA) 				return "Simple";
+    	if (compressionFormat == WMA_CBR) 			return "Constant bitrate";
+    	if (compressionFormat == WMA_LOSSLESS)	 	return "Lossless";
+    	if (compressionFormat == WMA_PRO)			return "Pro";
+    	if (compressionFormat == WMA_VBR)			return "Variable bitrate";
+    	return "Unknow";
     }    
     /** @param cFormatCode The compressionFormat to set. */
     public void setCompressionFormat(long cFormatCode) 	{ this.compressionFormat = cFormatCode; }    

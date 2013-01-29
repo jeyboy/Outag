@@ -41,12 +41,12 @@ public class FlacInfoReader {
 		assert mbdsi != null;
 
 		EncodingInfo info = new EncodingInfo();
-//		info.setLength(mbdsi.getLength());
+		info.setLength(mbdsi.getLength());
 		info.setPreciseLength(mbdsi.getPreciseLength());
 		info.setChannelNumber(mbdsi.getChannelNumber());
 		info.setSamplingRate(mbdsi.getSamplingRate());
 		info.setEncodingType(mbdsi.getEncodingType());
-		info.setExtraEncodingInfos("");
+//		info.setExtraEncodingInfos("");
 		info.setBitrate(computeBitrate(mbdsi.getLength(), raf.length()));
 
 		return info;

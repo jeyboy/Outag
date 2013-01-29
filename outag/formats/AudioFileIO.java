@@ -13,6 +13,7 @@ import outag.formats.mp3.Mp3FileReader;
 import outag.formats.mp4.Mp4FileReader;
 import outag.formats.mpc.MpcFileReader;
 import outag.formats.ogg.OggFileReader;
+import outag.formats.real.RealFileReader;
 import outag.formats.wav.WavFileReader;
 
 /** <p>Example of use:</p>
@@ -72,6 +73,8 @@ public class AudioFileIO {
 				case "mp3":	readers.put(ext, (reader = new Mp3FileReader()));	break;
 				case "mp4":
 				case "m4a":
+				case "m4p":
+				case "m4b":	
 					readers.put(ext, (reader = new Mp4FileReader()));	break;
 				case "ogg": readers.put(ext, (reader = new OggFileReader()));	break;
 				case "flac": readers.put(ext, (reader = new FlacFileReader()));	break; 
@@ -80,6 +83,8 @@ public class AudioFileIO {
 				case "wma": readers.put(ext, (reader = new AsfFileReader()));	break;
 				case "mpc":
 				case "mp+": readers.put(ext, (reader = new MpcFileReader()));	break;
+				case "ra" :
+				case "rm" : readers.put(ext, (reader = new RealFileReader()));	break;
 				default: throw new CannotReadException("No Reader associated to this extension: " + ext); 
 			}
 
