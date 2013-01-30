@@ -1,6 +1,6 @@
 package outag.formats.generic;
 
-import java.io.DataInput;
+import java.io.RandomAccessFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -87,25 +87,25 @@ public class Utils {
 		return s.getBytes("UTF-8");
 	}
 	
-    public static int readUint32AsInt(DataInput di) throws IOException {
+    public static int readUint32AsInt(RandomAccessFile di) throws IOException {
         final long l = readUint32(di);
         if (l > Integer.MAX_VALUE) throw new IOException("uint32 value read overflows int");
         return (int) l;
     }
 
-    public static long readUint32(DataInput di) throws IOException {
+    public static long readUint32(RandomAccessFile di) throws IOException {
         final byte[] buf8 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
         di.readFully(buf8, 4, 4);
         return ByteBuffer.wrap(buf8).getLong();
     }
 
-    public static int readUint16(DataInput di) throws IOException {
+    public static int readUint16(RandomAccessFile di) throws IOException {
         final byte[] buf = {0x00, 0x00, 0x00, 0x00};
         di.readFully(buf, 2, 2);
         return ByteBuffer.wrap(buf).getInt();
     }
 
-    public static String readString(DataInput di, int charsToRead) throws IOException {
+    public static String readString(RandomAccessFile di, int charsToRead) throws IOException {
         final byte[] buf = new byte[charsToRead];
         di.readFully(buf);
         return new String(buf);
