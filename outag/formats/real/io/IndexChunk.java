@@ -1,14 +1,13 @@
 package outag.formats.real.io;
 
-import java.io.RandomAccessFile;
+import java.io.DataInputStream;
 import java.util.Vector;
 
-import outag.formats.generic.Utils;
 import outag.formats.real.utils.IndexEntry;
 
 /** INDX chunk. Contains index entries. It comes after all the DATA chunks. 
  * An index chunk contains data for a single stream, A file can have more than one INDX chunk. */
-public class IndexChunk extends GenericChunk {
+public class IndexChunk {
 	
 //	dword   Number of entries in this chunk
 //	word    Stream number
@@ -16,17 +15,15 @@ public class IndexChunk extends GenericChunk {
 //	byte[]  Index entries
 	
 	/** Offset of the next INDX chunk (form the start of the file) */
-	long nextIndexChunkOffset;
+	int nextIndexChunkOffset;
 	Vector<IndexEntry> entries;
-	int streamID;
+	short streamID;
 	
-	public IndexChunk(RandomAccessFile f) throws Exception {
-		super(f, "INDX");
-		
+	public IndexChunk(DataInputStream f) throws Exception {		
 		int entriesCount = (int)f.readLong();
 		entries = new Vector<IndexEntry>(entriesCount);
-		streamID = f.readInt();
-		nextIndexChunkOffset = f.readLong();
+		streamID = f.readShort();
+		nextIndexChunkOffset = f.readInt();
 		for(int loop = 0; loop < entriesCount; loop++)
 			entries.add(new IndexEntry(f));
 	}

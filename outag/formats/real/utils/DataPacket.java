@@ -1,6 +1,6 @@
 package outag.formats.real.utils;
 
-import java.io.RandomAccessFile;
+import java.io.DataInputStream;
 
 // TODO: Check which class correct
 
@@ -26,7 +26,7 @@ public class DataPacket {
 	 * </ol> */
 	byte flags;
 	
-	public DataPacket(RandomAccessFile f) throws Exception {
+	public DataPacket(DataInputStream f) throws Exception {
 		int packetVersion = f.readInt(); // 0 or 1
 		packetData = new byte[f.readInt()];
 		streamID = f.readInt();
@@ -62,7 +62,7 @@ class DataPacket2 {
 	byte packetGroup;
 	int ASM_rule;
 	
-	public DataPacket2(RandomAccessFile f) throws Exception {
+	public DataPacket2(DataInputStream f) throws Exception {
 		int packetVersion = f.readInt(); // 0 or 1
 		packetData = new byte[f.readInt()];
 		streamID = f.readInt();

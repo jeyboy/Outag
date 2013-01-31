@@ -1,25 +1,23 @@
 package outag.formats.real.io;
 
-import java.io.RandomAccessFile;
-
-import outag.formats.generic.Utils;
+import java.io.DataInputStream;
 
 /** PROP chunk */
-public class FilePropertiesChunk extends GenericChunk {
-	long maxBitrate;
-	long averageBitrate;
-	long maxDataPacketSize;
-	long averageDataPacketSize;
-	long dataPacketsCount;
+public class FilePropertiesChunk {
+	int maxBitrate;
+	int averageBitrate;
+	int maxDataPacketSize;
+	int averageDataPacketSize;
+	int dataPacketsCount;
 	/** file common duration */
-	long duration; //in ms
-	long playBufferInMs;
+	int duration; //in ms
+	int playBufferInMs;
 	/** Offset of the first INDX chunk form the start of the file */
-	long INDX_chunkOffset;
+	int INDX_chunkOffset;
 	
 	/** Offset of the first DATA chunk form the start of the file */
-	long DATA_chunkOffset;
-	int streamCount;
+	int DATA_chunkOffset;
+	short streamCount;
 	
 	/**
 	 * <ol start="0">
@@ -28,7 +26,7 @@ public class FilePropertiesChunk extends GenericChunk {
 	 *   <li>bit : the file is a live broadcast </li>
 	 *  </ol>
 	 * */
-	int flags;
+	short flags;
 	
 //	dword  Chunk type ('PROP')
 //	dword  Chunk size (typically 0x32)
@@ -45,19 +43,17 @@ public class FilePropertiesChunk extends GenericChunk {
 //	word   Number of streams in the file
 //	word   Flags (bitfield, see below)	
 	
-	public FilePropertiesChunk(RandomAccessFile f) throws Exception {
-		super(f, "PROP");
-	
-		maxBitrate = Utils.readUint32(f);
-		averageBitrate = Utils.readUint32(f);
-		maxDataPacketSize = Utils.readUint32(f);
-		averageDataPacketSize = Utils.readUint32(f);
-		dataPacketsCount = Utils.readUint32(f);
-		duration = Utils.readUint32(f);
-		playBufferInMs = Utils.readUint32(f);
-		INDX_chunkOffset = Utils.readUint32(f);
-		DATA_chunkOffset = Utils.readUint32(f);
-		streamCount = Utils.readUint16(f);
-		flags = Utils.readUint16(f);		
+	public FilePropertiesChunk(DataInputStream f) throws Exception {
+		maxBitrate = f.readInt();
+		averageBitrate = f.readInt();
+		maxDataPacketSize = f.readInt();
+		averageDataPacketSize = f.readInt();
+		dataPacketsCount = f.readInt();
+		duration = f.readInt();
+		playBufferInMs = f.readInt();
+		INDX_chunkOffset = f.readInt();
+		DATA_chunkOffset = f.readInt();
+		streamCount = f.readShort();
+		flags = f.readShort();		
 	}
 }

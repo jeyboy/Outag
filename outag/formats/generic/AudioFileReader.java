@@ -21,14 +21,14 @@ public abstract class AudioFileReader {
 	 * @param raf - The RandomAccessFile associated with the current file
 	 * @exception IOException is thrown when the RandomAccessFile operations throw it (you should never throw them manually)
 	 * @exception CannotReadException when an error occurred during the parsing of the encoding info */
-	protected abstract EncodingInfo getEncodingInfo( RandomAccessFile raf )  throws CannotReadException, IOException;
+	protected abstract EncodingInfo getEncodingInfo( RandomAccessFile raf )  throws CannotReadException, IOException, Exception;
 	
 	/* Same as above but returns the Tag contained in the file, or a new one.
 	 * 
 	 * @param raf - The RandomAccessFile associated with the current file
 	 * @exception IOException is thrown when the RandomAccessFile operations throw it (you should never throw them manually)
 	 * @exception CannotReadException when an error occurred during the parsing of the tag */
-	protected abstract Tag getTag( RandomAccessFile raf )  throws CannotReadException, IOException;
+	protected abstract Tag getTag( RandomAccessFile raf )  throws CannotReadException, IOException, Exception;
 	
 	/* Reads the given file, and return an AudioFile object containing the Tag
 	 * and the encoding infos present in the file. If the file has no tag, an

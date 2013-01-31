@@ -1,6 +1,6 @@
 package outag.formats.real.utils;
 
-import java.io.RandomAccessFile;
+import java.io.DataInputStream;
 
 public class IndexEntry {
 //	 word   Entry version (always 0, for every known file)
@@ -8,15 +8,15 @@ public class IndexEntry {
 //	 dword  Packet offset in file (form the start of the file)
 //	 dword  Packet number
 	
-	long timestamp;
+	int timestamp;
 	/** Packet offset in file (form the start of the file) */
-	long packetOffset;
-	long packetSequenceNumber;
+	int packetOffset;
+	int packetSequenceNumber;
 	
-	public IndexEntry(RandomAccessFile f) throws Exception {
-		f.readInt(); // version
-		timestamp = f.readLong();
-		packetOffset = f.readLong();
-		packetSequenceNumber = f.readLong();
+	public IndexEntry(DataInputStream f) throws Exception {
+		f.readShort(); // version
+		timestamp = f.readInt();
+		packetOffset = f.readInt();
+		packetSequenceNumber = f.readInt();
 	}
 }

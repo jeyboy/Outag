@@ -1,11 +1,11 @@
 package outag.formats.real.utils;
 
-import java.io.RandomAccessFile;
+import java.io.DataInputStream;
 
 import outag.formats.exceptions.InvalidSequenceException;
 import outag.formats.exceptions.UnsupportedException;
 import outag.formats.real.RealTag;
-
+ 
 public class AudioInfo {
 //	 byte[4]  Header signature ('.', 'r', 'a', 0xfd)
 //	 word     Version (3, 4 or 5)
@@ -76,23 +76,26 @@ public class AudioInfo {
 //	#endif	
 	
 	/** possible values : 3,4,5 */
-	int version;
-	RealTag tag = null;
-	CodecInfo codecInfo = null;
+	short version;
+	public RealTag tag = null;
+	public CodecInfo codecInfo = null;
 	
-	public AudioInfo(RandomAccessFile f, int blockLength) throws Exception {
+	public AudioInfo(DataInputStream f) throws Exception {
 		byte [] buffer;
 		
-		buffer = new byte[4]; f.read(buffer);
-//		buffer equals ['.', 'r', 'a', 0xfd]
-		
-		version = f.readInt(); //word     Version (3, 4 or 5)
+//		buffer = new byte[4]; f.read(buffer);
+//		new String(buffer).equals(['.', 'r', 'a', 0xfd])
+//		buffer equals ['.', 'r', 'a', 0xfd]		
+		if (f.readInt() != 779248125) //['.', 'r', 'a', 0xfd]
+			throw new InvalidSequenceException("AudioCodec info has wrong header");
+	
+		version = f.readShort(); //word     Version (3, 4 or 5)
 		if (version < 3 || version > 5) throw new UnsupportedException("Wrong or unsupported version");
 
 		if (version == 3) {
-			int headerSize = f.readInt(); // not including first 8 bytes
+			short headerSize = f.readShort(); // not including first 8 bytes
 			buffer = new byte[10]; f.read(buffer); //	 byte[10] Unknown
-			long dataSize = f.readLong(); // Data size
+			int dataSize = f.readInt(); // Data size
 			
 			tag = new RealTag();
 			
@@ -115,46 +118,46 @@ public class AudioInfo {
 		} else {
 			codecInfo = new CodecInfo();
 			
-			f.readInt(); // Unused (always 0)
+			f.readShort(); // Unused (always 0)
 			buffer = new byte[4]; f.read(buffer);
 //		 	byte[4]  ra signature (".ra4" or ".ra5", depending on version)
 			
-			long dataSize = f.readLong(); // possible data size - 0x27
-			f.readInt(); //  Version2 (always equal to version)
-			f.readLong();//  Header size - 16
+			int dataSize = f.readInt(); // possible data size - 0x27
+			f.readShort(); //  Version2 (always equal to version)
+			f.readInt();//  Header size - 16
 			
-			codecInfo.setcodecFlavor(f.readInt());
-			codecInfo.setcodecFrameSize(f.readLong());
+			codecInfo.setcodecFlavor(f.readShort());
+			codecInfo.setcodecFrameSize(f.readInt());
 			buffer = new byte[12]; f.read(buffer); //Unknow
 
-			codecInfo.setsubpacketH(f.readInt());
-			codecInfo.setframeSize(f.readInt());
-			codecInfo.setsubpacketSize(f.readInt());
+			codecInfo.setsubpacketH(f.readShort());
+			codecInfo.setframeSize(f.readShort());
+			codecInfo.setsubpacketSize(f.readShort());
 			
-			f.readInt(); //   Unknown
+			f.readShort(); //   Unknown
 			
 			if (version == 5) {
 				buffer = new byte[6]; f.read(buffer); //Unknow
 			}
 				
-			codecInfo.setsampleRate(f.readInt());
-			f.readInt(); // Unknow
-			codecInfo.setsampleSize(f.readInt());
-			codecInfo.setchannels(f.readInt());
+			codecInfo.setsampleRate(f.readShort());
+			f.readShort(); // Unknow
+			codecInfo.setsampleSize(f.readShort());
+			codecInfo.setchannels(f.readShort());
 
 			if (version == 4) {
 				buffer = new byte[f.read()]; f.read(buffer); //Interleaver ID string // always 4 bytes
 				buffer = new byte[f.read()]; f.read(buffer); //FourCC string // always 4 bytes
 			} else {
-				f.readLong(); // Interleaver ID / maybe need convert value to string 
-				f.readLong(); // FourCC // FourCC is four character constant / maybe need convert value to string 
+				f.readInt(); // Interleaver ID / maybe need convert value to string 
+				f.readInt(); // FourCC // FourCC is four character constant / maybe need convert value to string 
 			}
 			
 			buffer = new byte[3]; f.read(buffer); //Unknow
 			if (version == 5)
 				f.read(); //Unknow
 
-//TODO: Check exist of next block for version 4 (maybe also include in 5 version)			
+//TODO: Check exist of next block for version 4			
 			if (version == 4) {
 				tag = new RealTag();
 				
@@ -172,7 +175,7 @@ public class AudioInfo {
 			}
 
 //TODO: Check exist of next inclusions (maybe only for 5 version) 			 			
-			buffer = new byte[(int)f.readLong()]; f.read(buffer);
+			buffer = new byte[(int)f.readInt()]; f.read(buffer);
 			codecInfo.setcodecExtraData(buffer);
 		}			
 	}

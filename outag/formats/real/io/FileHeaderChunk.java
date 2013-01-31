@@ -1,11 +1,9 @@
 package outag.formats.real.io;
 
-import java.io.RandomAccessFile;
-
-import outag.formats.generic.Utils;
+import java.io.DataInputStream;
 
 /** .RMF chunk */
-public class FileHeaderChunk extends GenericChunk {
+public class FileHeaderChunk {
 	long file_version = -1;
 	long num_headers = -1;
 	
@@ -15,10 +13,8 @@ public class FileHeaderChunk extends GenericChunk {
 //	dword file version
 //	dword number of headers	
 	
-	public FileHeaderChunk(RandomAccessFile f) throws Exception {
-		super(f, ".RMF");
-		
-		file_version = Utils.readUint32(f);
-		num_headers = Utils.readUint32(f);			
+	public FileHeaderChunk(DataInputStream f) throws Exception {
+		file_version = f.readInt();
+		num_headers = f.readInt();			
 	}
 }

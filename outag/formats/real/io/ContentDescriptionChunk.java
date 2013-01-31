@@ -1,12 +1,11 @@
 package outag.formats.real.io;
 
-import java.io.RandomAccessFile;
-
+import java.io.DataInputStream;
 import outag.formats.real.RealTag;
 
 /** CONT chunk */
-public class ContentDescriptionChunk extends GenericChunk {
-	RealTag tag;
+public class ContentDescriptionChunk {
+	public RealTag tag;
 	
 //	dword   Chunk type ('CONT')
 //	dword   Chunk size
@@ -20,9 +19,7 @@ public class ContentDescriptionChunk extends GenericChunk {
 //	word    Comment string length
 //	byte[]  Comment string	
 	
-	public ContentDescriptionChunk(RandomAccessFile f) throws Exception {
-		super(f, "CONT");
-		
+	public ContentDescriptionChunk(DataInputStream f) throws Exception {		
 		byte [] buffer;
 		tag = new RealTag();
 		
@@ -36,6 +33,6 @@ public class ContentDescriptionChunk extends GenericChunk {
 		tag.setCopyright(new String(buffer));
 		
 		buffer = new byte[f.readInt()]; f.read(buffer);
-		tag.addComment(new String(buffer));		
+		tag.addComment(new String(buffer));
 	}
 }

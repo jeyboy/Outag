@@ -1,22 +1,25 @@
 package outag.formats.real.io;
 
-import java.io.RandomAccessFile;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 
+import outag.formats.exceptions.UnsupportedException;
 import outag.formats.generic.Utils;
 import outag.formats.real.utils.AudioInfo;
+import outag.formats.real.utils.LogicalStreamInfo;
 
 /** MDPR chunk */
-public class MediaPropertiesChunk extends GenericChunk {
-	int streamId;
-	long maxBitrate;
-	long averageBitrate;
-	long maxDataPacketSize;
-	long averageDataPacketSize;
-	long streamStartInMs;
+public class MediaPropertiesChunk {
+	short streamId;
+	int maxBitrate;
+	int averageBitrate;
+	int maxDataPacketSize;
+	int averageDataPacketSize;
+	int streamStartInMs;
 	/** Preroll in ms (to be subtracted from timestamps?) */
-	long prerollInMs;
+	int prerollInMs;
 	/** stream duration */
-	long duration; // in ms
+	int duration; // in ms
 	String streamDescription;
 	/**
 	 * Possible :
@@ -28,7 +31,8 @@ public class MediaPropertiesChunk extends GenericChunk {
 	 * </ul>
 	 *  */
 	String mimeType; 
-	AudioInfo typeSpecificData;	
+	AudioInfo audioInfo = null;
+	LogicalStreamInfo logicStreamInfo = null;
 	
 	
 //	dword   Chunk type ('MDPR')
@@ -49,25 +53,35 @@ public class MediaPropertiesChunk extends GenericChunk {
 //	dword   Size of type specific part of the header
 //	byte[]  Type specific data, meaning and format depends on mime type	
 	
-	public MediaPropertiesChunk(RandomAccessFile f) throws Exception {
-		super(f, "MDPR");
-	
-		streamId = Utils.readUint16(f);
-		maxBitrate = Utils.readUint32(f);
-		averageBitrate = Utils.readUint32(f);
-		maxDataPacketSize = Utils.readUint32(f);
-		averageDataPacketSize = Utils.readUint32(f);
-		streamStartInMs = Utils.readUint32(f);
-		prerollInMs  = Utils.readUint32(f);
-		duration = Utils.readUint32(f);
+	public MediaPropertiesChunk(DataInputStream f) throws Exception {
+		streamId = f.readShort();
+		maxBitrate = f.readInt();
+		averageBitrate = f.readInt();
+		maxDataPacketSize = f.readInt();
+		averageDataPacketSize = f.readInt();
+		streamStartInMs = f.readInt();
+		prerollInMs  = f.readInt();
+		duration = f.readInt();
 //		byte    Size of stream description string
 		streamDescription = Utils.readString(f, f.read());
 //		byte    Size of stream mime type string
 		mimeType = Utils.readString(f, f.read());
 		
-		int dataLength = (int)Utils.readUint32(f);
-//		if (dataLength == 0 && mimeType equal "audio/X-MP3-draft-00") return; // no extra info
-//		if (mymeType equal "audio/x-ralf-mpeg4") return; //dont know how parse info
-		typeSpecificData = new AudioInfo(f, dataLength);
+		int dataLength = (int)f.readInt();
+		byte [] b = new byte[dataLength];
+		f.readFully(b);
+		
+		switch(mimeType) {
+			case "audio/x-pn-realaudio" :
+				audioInfo = new AudioInfo(new DataInputStream(new ByteArrayInputStream(b)));
+				break;
+			case "logical-fileinfo":
+				logicStreamInfo = new LogicalStreamInfo(new DataInputStream(new ByteArrayInputStream(b)));
+				break;
+			case "audio/X-MP3-draft-00": /*dataLength must equals 0. In this case we do not have any codec info */ break;
+			case "audio/x-ralf-mpeg4" : /* do not know parse struct*/
+			default: throw new UnsupportedException("Unknow mime : " + mimeType); 
+		}
+		
 	}
 }
