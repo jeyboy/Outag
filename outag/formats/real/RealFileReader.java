@@ -17,7 +17,6 @@ import java.io.RandomAccessFile;
 /** Real Media File Format: Major Chunks: .RMF PROP MDPR CONT DATA INDX */
 public class RealFileReader extends AudioFileReader {
     protected void fullTrack(RandomAccessFile raf) throws Exception {
-        EncodingInfo rv = new EncodingInfo();
         GenericChunk chunk;
         boolean cycle = true;
         long fileSize = raf.getChannel().size();
