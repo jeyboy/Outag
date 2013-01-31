@@ -72,7 +72,7 @@ public class RealFileReader extends AudioFileReader {
         				rv.setChannelNumber(mpc.audioInfo.codecInfo.getchannels());
         				rv.setSamplingRate(mpc.audioInfo.codecInfo.getsampleRate());
         				rv.setEncodingType(mpc.mimeType);
-//        				return rv;
+        				return rv;
         			}
         			break; 			
         	}
