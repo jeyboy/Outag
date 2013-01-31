@@ -7,6 +7,7 @@ import outag.formats.exceptions.UnsupportedException;
 import outag.formats.generic.Utils;
 import outag.formats.real.utils.AudioInfo;
 import outag.formats.real.utils.LogicalStreamInfo;
+import outag.formats.real.utils.LosslessAudioInfo;
 
 /** MDPR chunk */
 public class MediaPropertiesChunk {
@@ -32,6 +33,7 @@ public class MediaPropertiesChunk {
 	 *  */
 	public String mimeType; 
 	public AudioInfo audioInfo = null;
+	public LosslessAudioInfo losslessAudioInfo = null;
 	public LogicalStreamInfo logicStreamInfo = null;
 	
 	
@@ -79,7 +81,9 @@ public class MediaPropertiesChunk {
 				logicStreamInfo = new LogicalStreamInfo(new DataInputStream(new ByteArrayInputStream(b)));
 				break;
 			case "audio/X-MP3-draft-00": /*dataLength must equals 0. In this case we do not have any codec info */ break;
-			case "audio/x-ralf-mpeg4" : /* do not know parse struct*/
+			case "audio/x-ralf-mpeg4" : 
+			case "audio/x-ralf-mpeg4-generic" :
+				losslessAudioInfo = new LosslessAudioInfo(new DataInputStream(new ByteArrayInputStream(b)));
 			default: throw new UnsupportedException("Unknow mime : " + mimeType); 
 		}
 		
