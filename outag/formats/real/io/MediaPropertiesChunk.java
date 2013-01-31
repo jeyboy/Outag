@@ -11,16 +11,16 @@ import outag.formats.real.utils.LogicalStreamInfo;
 /** MDPR chunk */
 public class MediaPropertiesChunk {
 	short streamId;
-	int maxBitrate;
-	int averageBitrate;
+	public int maxBitrate;
+	public int averageBitrate;
 	int maxDataPacketSize;
 	int averageDataPacketSize;
 	int streamStartInMs;
 	/** Preroll in ms (to be subtracted from timestamps?) */
 	int prerollInMs;
 	/** stream duration */
-	int duration; // in ms
-	String streamDescription;
+	public int duration; // in ms
+	public String streamDescription;
 	/**
 	 * Possible :
 	 * <ul>
@@ -30,9 +30,9 @@ public class MediaPropertiesChunk {
 	 * 	<li>audio/x-ralf-mpeg4</li>
 	 * </ul>
 	 *  */
-	String mimeType; 
-	AudioInfo audioInfo = null;
-	LogicalStreamInfo logicStreamInfo = null;
+	public String mimeType; 
+	public AudioInfo audioInfo = null;
+	public LogicalStreamInfo logicStreamInfo = null;
 	
 	
 //	dword   Chunk type ('MDPR')

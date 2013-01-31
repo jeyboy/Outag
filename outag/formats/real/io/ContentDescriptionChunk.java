@@ -23,16 +23,16 @@ public class ContentDescriptionChunk {
 		byte [] buffer;
 		tag = new RealTag();
 		
-		buffer = new byte[f.readInt()]; f.read(buffer);
+		buffer = new byte[f.readShort()]; f.read(buffer);
 		tag.addTitle(new String(buffer));
 		
-		buffer = new byte[f.readInt()]; f.read(buffer);
+		buffer = new byte[f.readShort()]; f.read(buffer);
 		tag.addArtist(new String(buffer));
 		
-		buffer = new byte[f.readInt()]; f.read(buffer);
+		buffer = new byte[f.readShort()]; f.read(buffer);
 		tag.setCopyright(new String(buffer));
 		
-		buffer = new byte[f.readInt()]; f.read(buffer);
+		buffer = new byte[f.readShort()]; f.read(buffer);
 		tag.addComment(new String(buffer));
 	}
 }

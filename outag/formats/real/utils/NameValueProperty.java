@@ -1,6 +1,8 @@
 package outag.formats.real.utils;
 
 import java.io.DataInputStream;
+import java.io.IOException;
+import java.util.Vector;
 
 public class NameValueProperty {
 //	NameValueProperty
@@ -18,7 +20,23 @@ public class NameValueProperty {
 //	  }
 //	}
 	
-	public NameValueProperty(DataInputStream f) {
+	public Vector<Byte> names;
+	public Vector<Byte> values;
+	
+	public NameValueProperty(DataInputStream f) throws IOException {
+		int size = f.readInt();
+		short version = f.readShort();
 		
+		byte nameCount = f.readByte();
+		names = new Vector<Byte>(nameCount);
+		for(byte loop1 = 0 ; loop1 < nameCount; loop1++)
+			names.add(f.readByte());
+		
+		int type = f.readInt();
+
+		short valueCount = f.readShort();
+		values = new Vector<Byte>(valueCount);
+		for(byte loop1 = 0 ; loop1 < valueCount; loop1++)
+			values.add(f.readByte());		
 	}
 }

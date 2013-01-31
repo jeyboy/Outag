@@ -81,15 +81,15 @@ public class AudioFileIO {
 				case "ape": readers.put(ext, (reader = new MonkeyFileReader()));	break;
 				case "wav": readers.put(ext, (reader = new WavFileReader()));	break;
 				case "wma": readers.put(ext, (reader = new AsfFileReader()));	break;
-				case "mpc":
-				case "mp+":
-				case "mpp":
+				case "mpc": //not tested
+				case "mp+": //not tested
+				case "mpp": //not tested
 					readers.put(ext, (reader = new MpcFileReader()));	break;
-				case "ra" :
-				case "rm" :
-				case "ram" :
-				case "rmvb" :						
+				case "ra" : 
+				case "rm" : //not tested
+				case "rmvb" : //not tested						
 					readers.put(ext, (reader = new RealFileReader()));	break;
+//				case "ram" : //not support yet					
 				default: throw new CannotReadException("No Reader associated to this extension: " + ext); 
 			}
 

@@ -4,13 +4,13 @@ import java.io.DataInputStream;
 
 /** PROP chunk */
 public class FilePropertiesChunk {
-	int maxBitrate;
-	int averageBitrate;
+	public int maxBitrate;
+	public int averageBitrate;
 	int maxDataPacketSize;
 	int averageDataPacketSize;
 	int dataPacketsCount;
 	/** file common duration */
-	int duration; //in ms
+	public int duration; //in ms
 	int playBufferInMs;
 	/** Offset of the first INDX chunk form the start of the file */
 	int INDX_chunkOffset;
