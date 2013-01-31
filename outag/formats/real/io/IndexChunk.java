@@ -15,12 +15,12 @@ public class IndexChunk {
 //	byte[]  Index entries
 	
 	/** Offset of the next INDX chunk (form the start of the file) */
-	int nextIndexChunkOffset;
-	Vector<IndexEntry> entries;
-	short streamID;
+	public int nextIndexChunkOffset;
+	public Vector<IndexEntry> entries;
+	public short streamID;
 	
 	public IndexChunk(DataInputStream f) throws Exception {		
-		int entriesCount = (int)f.readLong();
+		int entriesCount = f.readInt();
 		entries = new Vector<IndexEntry>(entriesCount);
 		streamID = f.readShort();
 		nextIndexChunkOffset = f.readInt();

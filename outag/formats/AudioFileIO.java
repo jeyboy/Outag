@@ -86,7 +86,7 @@ public class AudioFileIO {
 				case "mpp": //not tested
 					readers.put(ext, (reader = new MpcFileReader()));	break;
 				case "ra" : 
-				case "rm" : //not tested
+				case "rm" :
 				case "rmvb" : //not tested						
 					readers.put(ext, (reader = new RealFileReader()));	break;
 //				case "ram" : //not support yet					

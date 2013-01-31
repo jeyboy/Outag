@@ -2,7 +2,7 @@ package outag.formats.real.utils;
 
 import java.io.DataInputStream;
 
-// TODO: Check which class correct
+// TODO: Check which class correct ( At this moment no one realization is not correct)
 
 /** Variant 1 */
 public class DataPacket {
@@ -17,20 +17,22 @@ public class DataPacket {
 //	#endif
 //	 byte[]  Stream-specific data
 	
-	byte [] packetData;
-	int streamID;
-	long timestamp;
+	public byte [] packetData;
+	public short streamID;
+	public int timestamp;
 	/**<ol start="0">
 	 * 	<li>bit : reliable packet (refers to network transmission method)</li>
     	<li>bit : keyframe</li> 
 	 * </ol> */
-	byte flags;
+	public byte flags;
 	
 	public DataPacket(DataInputStream f) throws Exception {
-		int packetVersion = f.readInt(); // 0 or 1
-		packetData = new byte[f.readInt()];
-		streamID = f.readInt();
-		timestamp = f.readLong();
+		short packetVersion = f.readShort(); // 0 or 1
+		if (packetVersion < 0 || packetVersion > 1) return; // Stream done if packet version not equal 0 or 1
+		
+		packetData = new byte[f.readShort()];
+		streamID = f.readShort();
+		timestamp = f.readInt();
 		f.read(); // unknow byte
 		flags = f.readByte();
 		if (packetVersion == 1)
@@ -55,23 +57,25 @@ class DataPacket2 {
 //	#endif
 //	 byte[]  Stream-specific data
 	
-	byte [] packetData;
-	int streamID;
-	long timestamp;
-	byte flags;
-	byte packetGroup;
-	int ASM_rule;
+	public byte [] packetData;
+	public short streamID;
+	public int timestamp;
+	public byte flags;
+	public byte packetGroup;
+	public short ASM_rule;
 	
 	public DataPacket2(DataInputStream f) throws Exception {
-		int packetVersion = f.readInt(); // 0 or 1
-		packetData = new byte[f.readInt()];
-		streamID = f.readInt();
-		timestamp = f.readLong();
+		short packetVersion = f.readShort(); // 0 or 1
+		if (packetVersion < 0 || packetVersion > 1) return; // Stream done if packet version not equal 0 or 1 
+		
+		packetData = new byte[f.readShort()];
+		streamID = f.readShort();
+		timestamp = f.readInt();
 		
 		if (packetVersion == 0)
 			packetGroup = f.readByte();
 		else
-			ASM_rule = f.readInt();
+			ASM_rule = f.readShort();
 		flags = f.readByte();
 
 		f.readFully(packetData);

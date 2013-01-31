@@ -8,10 +8,10 @@ public class IndexEntry {
 //	 dword  Packet offset in file (form the start of the file)
 //	 dword  Packet number
 	
-	int timestamp;
+	public int timestamp;
 	/** Packet offset in file (form the start of the file) */
-	int packetOffset;
-	int packetSequenceNumber;
+	public int packetOffset;
+	public int packetSequenceNumber;
 	
 	public IndexEntry(DataInputStream f) throws Exception {
 		f.readShort(); // version

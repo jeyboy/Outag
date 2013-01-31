@@ -22,7 +22,7 @@ public class DataChunk {
 	public DataChunk(DataInputStream f) throws Exception {		
 		int dataPacketsNum = f.readInt();
 		dataPackets = new Vector<DataPacket>(dataPacketsNum);
-		nextDataChunkOffset = f.readInt();
+		nextDataChunkOffset = f.readInt(); // Maybe need offset file point before next data chunk proceeding with this value
 		
 		for(int packetNum = 0; packetNum < dataPacketsNum; packetNum++)
 			dataPackets.add(new DataPacket(f));
