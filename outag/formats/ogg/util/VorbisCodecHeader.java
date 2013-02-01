@@ -27,7 +27,7 @@ public class VorbisCodecHeader {
 		int packetType = b[0];
 		String vorbis = new String(b, 1, 6);
 		if (packetType == 1 && vorbis.equals("vorbis")) {
-			this.vorbisVersion = b[7] + (b[8] << 8) + (b[9] << 16) + (b[10] << 24);
+			this.vorbisVersion = u(b[7]) + (u(b[8]) << 8) + (u(b[9]) << 16) + (u(b[10]) << 24);
 			this.audioChannels = u(b[11]);
 			this.audioSampleRate = u(b[12]) + (u(b[13]) << 8) + (u(b[14]) << 16) + (u(b[15]) << 24);
 			

@@ -48,6 +48,126 @@ public class Utils {
 
 		return number;
 	}
+	
+    /*
+    * Computes a number whereby the 1st byte is the least signifcant and the last
+    * byte is the most significant.
+    *
+    * @param b The byte array @param start The starting offset in b
+    * (b[offset]). The less significant byte @param end The end index
+    * (included) in b (b[end]). The most significant byte @return a long number
+    * represented by the byte sequence.
+    *
+    * So if storing a number which only requires one byte it will be stored in the first
+    * byte.
+    */
+    public static long getLongLE(ByteBuffer b, int start, int end)
+    {
+        long number = 0;
+        for (int i = 0; i < (end - start + 1); i++)
+        {
+            number += ((b.get(start + i) & 0xFF) << i * 8);
+        }
+
+        return number;
+    }
+
+    /*
+     * Computes a number whereby the 1st byte is the most significant and the last
+     * byte is the least significant.
+     *
+     * So if storing a number which only requires one byte it will be stored in the last
+     * byte.
+     */
+    public static long getLongBE(ByteBuffer b, int start, int end)
+    {
+        long number = 0;
+        for (int i = 0; i < (end - start + 1); i++)
+        {
+            number += ((long)((b.get(end - i) & 0xFF)) << i * 8);
+        }
+
+        return number;
+    }
+
+    public static int getIntLE(byte[] b)
+    {
+        return (int) getLongLE(ByteBuffer.wrap(b), 0, b.length - 1);
+    }
+
+    /*
+      * same as above, but returns an int instead of a long @param b The byte
+      * array @param start The starting offset in b (b[offset]). The less
+      * significant byte @param end The end index (included) in b (b[end]). The
+      * most significant byte @return a int number represented by the byte
+      * sequence.
+      */
+    public static int getIntLE(byte[] b, int start, int end)
+    {
+        return (int) getLongLE(ByteBuffer.wrap(b), start, end);
+    }
+
+    public static int getIntBE(byte[] b, int start, int end)
+    {
+        return (int) getLongBE(ByteBuffer.wrap(b), start, end);
+    }
+
+    public static int getIntBE(ByteBuffer b, int start, int end)
+    {
+        return (int) getLongBE(b, start, end);
+    }
+
+    public static short getShortBE(ByteBuffer b, int start, int end)
+    {
+        return (short) getIntBE(b, start, end);
+    }
+
+    /**
+     * Convert int to byte representation - Big Endian (as used by mp4)
+     *
+     * @param size
+     * @return byte represenetation
+     */
+    public static byte[] getSizeBEInt32(int size)
+    {
+        byte[] b = new byte[4];
+        b[0] = (byte) ((size >> 24) & 0xFF);
+        b[1] = (byte) ((size >> 16) & 0xFF);
+        b[2] = (byte) ((size >> 8) & 0xFF);
+        b[3] = (byte) (size & 0xFF);
+        return b;
+    }
+
+    /**
+     * Convert short to byte representation - Big Endian (as used by mp4)
+     *
+     * @param size
+     * @return byte represenetation
+     */
+    public static byte[] getSizeBEInt16(short size)
+    {
+        byte[] b = new byte[2];
+        b[0] = (byte) ((size >> 8) & 0xFF);
+        b[1] = (byte) (size & 0xFF);
+        return b;
+    }
+
+
+    /**
+     * Convert int to byte representation - Little Endian (as used by ogg vorbis)
+     *
+     * @param size
+     * @return byte represenetation
+     */
+    public static byte[] getSizeLEInt32(int size)
+    {
+        byte[] b = new byte[4];
+        b[0] = (byte) (size & 0xff);
+        b[1] = (byte) ((size >>> 8) & 0xffL);
+        b[2] = (byte) ((size >>> 16) & 0xffL);
+        b[3] = (byte) ((size >>> 24) & 0xffL);
+        return b;
+    }	
 
 	/** @return an int number composed of (end-start) bytes in the b array. The byte
 	 * array @param start The starting offset in b (b[offset]). The less
@@ -79,6 +199,22 @@ public class Utils {
 			String encoding) throws UnsupportedEncodingException {
 		return new String(b, offset, length, encoding);
 	}
+	
+    public static String getString(ByteBuffer buffer, int offset, int length, String encoding)
+    {
+        byte[] b = new byte[length];
+        buffer.position(buffer.position() + offset);
+        buffer.get(b);
+        try
+        {
+            return new String(b, 0, length, encoding);
+        }
+        catch (UnsupportedEncodingException uee)
+        {
+            //TODO, will we ever use unsupported encodings
+            throw new RuntimeException(uee);
+        }
+    }	
 
 	/** Tries to convert a string into an UTF8 array of bytes If the conversion
 	 * fails, return the string converted with the default encoding.
@@ -97,7 +233,28 @@ public class Utils {
     public static String readString(RandomAccessFile f, int charsToRead) throws IOException {
         final byte[] buf = new byte[charsToRead];
         f.readFully(buf);
-        return new String(buf);
+        return new String(buf);        
+    }    
+    
+    public static int readUBEInt32(ByteBuffer b) {
+        int result = 0;
+        result += readUBEInt16(b) << 16;
+        result += readUBEInt16(b);
+        return result;
+    }
+
+    public static int readUBEInt24(ByteBuffer b) {
+        int result = 0;
+        result += readUBEInt16(b) << 16;
+        result += readUInt8(b);
+        return result;
+    }
+
+    public static int readUBEInt16(ByteBuffer b) {
+        int result = 0;
+        result += readUInt8(b) << 8;
+        result += readUInt8(b);
+        return result;
     }    
 
     public static int readUInt8(ByteBuffer b) { return read(b); }
