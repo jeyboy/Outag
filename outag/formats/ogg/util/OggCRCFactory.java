@@ -5,7 +5,7 @@ public class OggCRCFactory {
 	private static boolean init = false;
 
 	public static void init() {
-		for ( int i = 0; i < 256; i++ ) {
+		for (int i = 0; i < 256; i++) {
 			long r = i << 24;
 
 			for (int j = 0; j < 8; j++)
@@ -20,7 +20,7 @@ public class OggCRCFactory {
 	}
 
 	public boolean checkCRC( byte[] data, byte[] crc ) {
-		return new String( crc ).equals( new String( computeCRC( data ) ) );
+		return new String(crc).equals(new String(computeCRC(data)));
 	}
 
 	public static byte[] computeCRC(byte[] data) {		

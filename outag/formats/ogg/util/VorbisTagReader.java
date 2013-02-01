@@ -9,22 +9,17 @@ import java.io.*;
 public class VorbisTagReader {
 	private OggTagReader oggTagReader = new OggTagReader();
 	
-	public Tag read( RandomAccessFile raf ) throws CannotReadException, IOException {
+	public Tag read(RandomAccessFile raf) throws CannotReadException, IOException {
 		long oldPos = 0;
-		//----------------------------------------------------------
-		
-		//Check wheter we have an ogg stream---------------
-		raf.seek( 0 );
 		byte[] b = new byte[4];
+		
+		raf.seek(0);
 		raf.read(b);
 		
 		String ogg = new String(b);
-		if( !ogg.equals("OggS") )
-			throw new CannotReadException("OggS Header could not be found, not an ogg stream");
-		//--------------------------------------------------
-		
-		//Parse the tag ------------------------------------
-		raf.seek( 0 );
+		if(!ogg.equals("OggS")) throw new CannotReadException("OggS Header could not be found, not an ogg stream");
+
+		raf.seek(0);
 
 		//Supposing 1st page = codec infos
 		//			2nd page = comment+decode info
@@ -34,25 +29,24 @@ public class VorbisTagReader {
 		b = new byte[4];
 		oldPos = raf.getFilePointer();
 		raf.seek(26);
-		int pageSegments = raf.readByte()&0xFF; //unsigned
+		int pageSegments = raf.readByte() & 0xFF; //unsigned
 		raf.seek(oldPos);
 		
 		b = new byte[27 + pageSegments];
-		raf.read( b );
+		raf.read(b);
 
-		OggPageHeader pageHeader = new OggPageHeader( b );
-
-		raf.seek( raf.getFilePointer() + pageHeader.getPageLength() );
+		OggPageHeader pageHeader = new OggPageHeader(b);
+		raf.seek(raf.getFilePointer() + pageHeader.getPageLength());
 
 		//2nd page extraction
 		oldPos = raf.getFilePointer();
 		raf.seek(raf.getFilePointer() + 26);
-		pageSegments = raf.readByte()&0xFF; //unsigned
+		pageSegments = raf.readByte() & 0xFF; //unsigned
 		raf.seek(oldPos);
 		
 		b = new byte[27 + pageSegments];
-		raf.read( b );
-		pageHeader = new OggPageHeader( b );
+		raf.read(b);
+		pageHeader = new OggPageHeader(b);
 
 		b = new byte[7];
 		raf.read( b );
@@ -65,7 +59,7 @@ public class VorbisTagReader {
 		OggTag tag = oggTagReader.read(raf);
 		
 		byte isValid = raf.readByte();
-		if ( isValid == 0 )
+		if (isValid == 0)
 			throw new CannotReadException("Error: The OGG Stream isn't valid, could not extract the tag");
 		
 		return tag;

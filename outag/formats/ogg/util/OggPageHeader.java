@@ -10,34 +10,26 @@ public class OggPageHeader {
 	private int pageSequenceNumber,streamSerialNumber;
 	private byte[] segmentTable;
 
-	public OggPageHeader( byte[] b ) {
-		//System.err.println(new String(b, 0 , 4));
+	public OggPageHeader(byte[] b) {
 		int streamStructureRevision = b[4];
-		//System.err.println("streamStructureRevision: " + streamStructureRevision);
 		headerTypeFlag = b[5];
-		//System.err.println("headerTypeFlag: " + headerTypeFlag);
-		if ( streamStructureRevision == 0 ) {
+		if (streamStructureRevision == 0) {
 			this.absoluteGranulePosition = 0;  //b[6] + (b[7]<<8) + (b[8]<<16) + (b[9]<<24) + (b[10]<<32) + (b[11]<<40) + (b[12]<<48) + (b[13]<<56);
-			for ( int i = 0; i < 8; i++ )
-				this.absoluteGranulePosition += u( b[i + 6] ) * Math.pow( 2, 8 * i );
+			for (int i = 0; i < 8; i++)
+				this.absoluteGranulePosition += u(b[i + 6]) * Math.pow(2, 8 * i);
 
-			streamSerialNumber = u(b[14]) + ( u(b[15]) << 8 ) + ( u(b[16]) << 16 ) + ( u(b[17]) << 24 );
-			//System.err.println("streamSerialNumber: " + streamSerialNumber);
-			pageSequenceNumber = u(b[18]) + (u(b[19]) << 8 ) + ( u(b[20]) << 16 ) + ( u(b[21]) << 24 );
-			//System.err.println("pageSequenceNumber: " + pageSequenceNumber);
+			streamSerialNumber = u(b[14]) + (u(b[15]) << 8) + (u(b[16]) << 16) + (u(b[17]) << 24);
+			pageSequenceNumber = u(b[18]) + (u(b[19]) << 8) + (u(b[20]) << 16) + (u(b[21]) << 24);
 			checksum = new byte[]{b[22], b[23], b[24], b[25]};
 
-
-			//int pageSegments = u( b[26] );
+			//int pageSegments = u(b[26]);
 			//System.err.println("pageSegments: " + pageSegments);
 
 			this.segmentTable = new byte[b.length - 27];
 			//System.err.println("pagesegment length; "+ (b.length-27));
-			for ( int i = 0; i < segmentTable.length; i++ ) {
+			for (int i = 0; i < segmentTable.length; i++) {
 				segmentTable[i] = b[27 + i];
-				this.pageLength += u( b[27 + i] );
-				//System.err.println("acc page length: "+this.pageLength);
-				//System.err.println(segmentTable[i]);
+				this.pageLength += u(b[27 + i]);
 			}
 
 			isValid = true;

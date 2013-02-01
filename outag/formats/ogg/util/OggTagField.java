@@ -8,7 +8,6 @@ import outag.formats.generic.Utils;
 
 /** Name and content of a tag entry in ogg-files.  */
 public class OggTagField implements TagTextField {
-
     /** If <code>true</code>, the id of the current encapsulated tag field is
      * specified as a common field. <br> Example is "ARTIST" which should be
      * interpreted by any application as the artist of the media content. <br>
@@ -45,7 +44,6 @@ public class OggTagField implements TagTextField {
 	            this.content = field;
             }
         }
-
         checkCommon();
     }
 
