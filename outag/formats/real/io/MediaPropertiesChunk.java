@@ -22,15 +22,6 @@ public class MediaPropertiesChunk {
 	/** stream duration */
 	public int duration; // in ms
 	public String streamDescription;
-	/**
-	 * Possible :
-	 * <ul>
-	 * 	<li>audio/x-pn-realaudio</li>
-	 * 	<li>audio/x-pn-multirate-realaudio</li>
-	 * 	<li>audio/X-MP3-draft-00</li>
-	 * 	<li>audio/x-ralf-mpeg4</li>
-	 * </ul>
-	 *  */
 	public String mimeType; 
 	public AudioInfo audioInfo = null;
 	public LosslessAudioInfo losslessAudioInfo = null;
@@ -84,8 +75,8 @@ public class MediaPropertiesChunk {
 			case "audio/x-ralf-mpeg4" : 
 			case "audio/x-ralf-mpeg4-generic" :
 				losslessAudioInfo = new LosslessAudioInfo(new DataInputStream(new ByteArrayInputStream(b)));
+			case "audio/x-pn-multirate-realaudio" : /* ASM-compatible RealAudio stream. Not supported */				
 			default: throw new UnsupportedException("Unknow mime : " + mimeType); 
 		}
-		
 	}
 }

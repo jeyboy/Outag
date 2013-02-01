@@ -5,7 +5,8 @@ import java.util.Vector;
 
 import outag.formats.real.utils.DataPacket;
 
-/** .RMF chunk */
+/** DATA chunk */
+// TODO : Lossless mode not realised
 public class DataChunk {
 	/** Offset of the next DATA chunk (form the start of the file) */
 	int nextDataChunkOffset = -1;
