@@ -67,12 +67,18 @@ public class RealFileReader extends AudioFileReader {
         			break;
         		case "MDPR":
         			MediaPropertiesChunk mpc = new MediaPropertiesChunk(chunk.data);
-        			if (mpc.audioInfo != null) {
+        			if (mpc.audioInfo != null) { 
         				rv.setChannelNumber(mpc.audioInfo.codecInfo.getchannels());
         				rv.setSamplingRate(mpc.audioInfo.codecInfo.getsampleRate());
         				rv.setEncodingType(mpc.mimeType);
         				return rv;
         			}
+        			if (mpc.losslessAudioInfo != null) { 
+        				rv.setChannelNumber(mpc.losslessAudioInfo.codecInfo.getchannels());
+        				rv.setSamplingRate(mpc.losslessAudioInfo.codecInfo.getsampleRate());
+        				rv.setEncodingType(mpc.mimeType);
+        				return rv;
+        			}        			
         			break; 			
         	}
         }

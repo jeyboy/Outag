@@ -75,6 +75,7 @@ public class MediaPropertiesChunk {
 			case "audio/x-ralf-mpeg4" : 
 			case "audio/x-ralf-mpeg4-generic" :
 				losslessAudioInfo = new LosslessAudioInfo(new DataInputStream(new ByteArrayInputStream(b)));
+				break;
 			case "audio/x-pn-multirate-realaudio" : /* ASM-compatible RealAudio stream. Not supported */				
 			default: throw new UnsupportedException("Unknow mime : " + mimeType); 
 		}
