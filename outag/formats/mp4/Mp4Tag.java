@@ -2,8 +2,8 @@ package outag.formats.mp4;
 
 import outag.formats.generic.AbstractTag;
 import outag.formats.generic.TagField;
-import outag.formats.mp4.util.Mp4TagTextField;
-import outag.formats.mp4.util.Mp4TagTextNumberField;
+import outag.formats.mp4.util.tag.Mp4TagTextField;
+import outag.formats.mp4.util.tag.Mp4TagTextNumberField;
 
 public class Mp4Tag extends AbstractTag {
     protected String getArtistId() 	{ return "ART"; }

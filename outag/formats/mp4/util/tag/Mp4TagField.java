@@ -1,4 +1,4 @@
-package outag.formats.mp4.util;
+package outag.formats.mp4.util.tag;
 
 import java.io.UnsupportedEncodingException;
 
