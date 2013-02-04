@@ -22,7 +22,7 @@ public class JBBuffer extends Parseable {
 	
 	public void pos(int new_pos) { base.position(new_pos); }
 	
-	public int pos() { return base.position(); }
+	public long pos() { return base.position(); }
 	
 	public long available() { return base.capacity() - base.position(); }
 	

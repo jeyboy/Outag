@@ -37,11 +37,11 @@ public class Mp4MdhdBox {
         int version = data.read();
 
         if (version == LONG_FORMAT) {
-        	data.skip(TIMESCALE_LONG_POS);
+        	data.pos(TIMESCALE_LONG_POS);
             samplingRate = data.UInt();
-            timeLength = data.UBELong();
+            timeLength = data.ULong();
         } else {
-        	data.skip(TIMESCALE_SHORT_POS);
+        	data.pos(TIMESCALE_SHORT_POS);
             samplingRate = data.UInt();
             timeLength = data.UInt();
         }

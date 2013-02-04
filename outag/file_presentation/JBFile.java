@@ -24,5 +24,7 @@ public class JBFile extends Parseable  {
 
 	public int skip(int n) throws IOException { return base.skipBytes(n);}
 
-	public long available() throws IOException { return base.length() - base.getFilePointer(); }	
+	public long available() throws IOException { return base.length() - base.getFilePointer(); }
+	
+	public long pos() throws IOException { return base.getFilePointer(); }
 }

@@ -160,8 +160,8 @@ public enum Mp4BoxIdentifier {
     XML$20("xml$20", "a tool by which vendors can add XML formatted information"),
     YRRC("yrrc", "Year when media was recorded (user-data)");
     
-    private String fieldName;
-    private String description;
+    String fieldName;
+    String description;
 
     Mp4BoxIdentifier(String fieldName, String description) {
         this.fieldName = fieldName;

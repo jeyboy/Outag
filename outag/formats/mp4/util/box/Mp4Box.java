@@ -1,7 +1,6 @@
 package outag.formats.mp4.util.box;
 
 import outag.file_presentation.Parseable;
-import outag.formats.exceptions.CannotReadException;
 
 public class Mp4Box {
     private String id;
@@ -10,7 +9,7 @@ public class Mp4Box {
     public String getId() { return id; }
     
     public int getLength() { return length - 8; }
-    
+//    [0, 0, 0, 51, 101, 115, 100, 115]
     public void init(Parseable f) throws Exception {
     	length = f.UInt();
         id = f.Str(4);
@@ -20,15 +19,21 @@ public class Mp4Box {
         }
     }
     
-    public void find(Parseable f, String box_id) throws Exception {
+    public boolean find(Parseable f, boolean throw_error, String ... box_ids) throws Exception {
     	init(f);
     	
     	try {
-	    	while(!getId().equals(box_id)) {
+	    	while(f.available() > 0) {
+	    		for(String box_id : box_ids)
+	    			if (getId().equals(box_id))
+	    				return true;
+	    		
 	    		f.skip(getLength());
 	    		init(f);
 	    	}
     	}
-    	catch(Exception e) { throw new CannotReadException("Not find box " + box_id); }
+    	catch(Exception e) {  }
+    	if (throw_error) throw new Error("Not find compatible headers");
+    	return false;
     }  
 }

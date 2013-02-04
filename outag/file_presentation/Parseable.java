@@ -8,6 +8,7 @@ public abstract class Parseable {
 	public abstract int read(byte [] array) throws IOException;
 	public abstract int skip(int n) throws IOException;
 	public abstract long available() throws IOException;
+	public abstract long pos() throws IOException;
 	
 	public byte [] Array(int length) throws IOException				{
 		byte [] ret = new byte[length]; read(ret);

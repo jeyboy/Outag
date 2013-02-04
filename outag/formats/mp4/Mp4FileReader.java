@@ -8,7 +8,7 @@ import outag.formats.Tag;
 import outag.formats.exceptions.CannotReadException;
 import outag.formats.generic.AudioFileReader;
 import outag.formats.mp4.util.Mp4InfoReader;
-import outag.formats.mp4.util.tag.Mp4TagReader;
+import outag.formats.mp4.util.Mp4TagReader;
 
 public class Mp4FileReader extends AudioFileReader {
     private Mp4InfoReader ir = new Mp4InfoReader();
