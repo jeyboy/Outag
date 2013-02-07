@@ -22,6 +22,8 @@ public class Mp4Box {
     public boolean find(Parseable f, boolean throw_error, String ... box_ids) throws Exception {
     	init(f);
     	
+    	if (box_ids.length == 0) return f.available() > 0;
+    	
     	try {
 	    	while(f.available() > 0) {
 	    		for(String box_id : box_ids)

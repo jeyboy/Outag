@@ -1,11 +1,13 @@
 package outag.formats.mp4.util;
 
-import java.io.IOException;
 import java.io.RandomAccessFile;
-
+import outag.file_presentation.JBBuffer;
+import outag.file_presentation.JBFile;
 import outag.formats.Tag;
-import outag.formats.exceptions.CannotReadException;
 import outag.formats.mp4.Mp4Tag;
+import outag.formats.mp4.util.box.Mp4Box;
+import outag.formats.mp4.util.box.Mp4BoxIdentifier;
+import outag.formats.mp4.util.box.Mp4MetaBox;
 
 /**
  * Reads metadata from mp4,
@@ -41,11 +43,57 @@ import outag.formats.mp4.Mp4Tag;
  * </pre
  */
 public class Mp4TagReader {
-	public Tag read(RandomAccessFile raf) throws CannotReadException, IOException {
+	public Tag read(RandomAccessFile raf) throws Exception {
 		Mp4Tag tag = new Mp4Tag();
-		
+        Mp4Box box = new Mp4Box();
+        JBFile file = new JBFile(raf);
+        
+        box.find(file, true, Mp4BoxIdentifier.MOOV.getName());       
+        JBBuffer moovBuffer = file.Buffer(box.getLength());		
+		       
+        if (box.find(moovBuffer, false, Mp4BoxIdentifier.UDTA.getName(), Mp4BoxIdentifier.META.getName())) {
+        	switch(box.getId()) {
+        		case "udta" :
+        			box.find(moovBuffer, true, Mp4BoxIdentifier.META.getName());
+        			new Mp4MetaBox(moovBuffer);       			
+        			box.find(moovBuffer, true, Mp4BoxIdentifier.ILST.getName());
+        			
+        			break;
+        		case "meta" :
+        			new Mp4MetaBox(moovBuffer);
+        			box.find(moovBuffer, true, Mp4BoxIdentifier.ILST.getName());        			
+        			
+        			break;
+        	}
+        	
+        	while(box.find(moovBuffer, false)) {
+        		tag.add(createMp4Field(box.getId(), b));
+        	}
+        }
+        else return tag;
 
-		return tag;
+//
+//        //Size of metadata (exclude the size of the ilst parentHeader), take a slice starting at
+//        //metadata children to make things safer
+//        int length = boxHeader.getLength() - Mp4BoxHeader.HEADER_LENGTH;
+//        ByteBuffer metadataBuffer = moovBuffer.slice();
+//        //Datalength is longer are there boxes after ilst at this level?
+//
+//        int read = 0;
+//        while (read < length)
+//        {
+//            //Read the boxHeader
+//            boxHeader.update(metadataBuffer);
+//
+//            //Create the corresponding datafield from the id, and slice the buffer so position of main buffer
+//            //wont get affected
+//            createMp4Field(tag, boxHeader, metadataBuffer.slice());
+//
+//            //Move position in buffer to the start of the next parentHeader
+//            metadataBuffer.position(metadataBuffer.position() + boxHeader.getDataLength());
+//            read += boxHeader.getLength();
+//        }
+        return tag;		
 	} 
 }
 

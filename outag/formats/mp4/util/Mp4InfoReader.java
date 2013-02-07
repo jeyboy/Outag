@@ -94,7 +94,6 @@ public class Mp4InfoReader {
 
         //Level 2-Searching for "trak" within "moov"
         box.find(mvhdBuffer, true, Mp4BoxIdentifier.TRAK.getName());
-//        int endOfFirstTrackInBuffer = mvhdBuffer.pos() + box.getLength();
 
         //Level 3-Searching for "mdia" within "trak"
         box.find(mvhdBuffer, true, Mp4BoxIdentifier.MDIA.getName());
@@ -122,7 +121,6 @@ public class Mp4InfoReader {
 
         //Level 5-Searching for "smhd" within "minf"
         //Only an audio track would have a smhd frame
-//        int pos = mvhdBuffer.pos();
         
         if (!box.find(mvhdBuffer, false, Mp4BoxIdentifier.SMHD.getName(), Mp4BoxIdentifier.VMHD.getName()))
         	throw new Exception("Find no audio and no video box");
@@ -136,7 +134,6 @@ public class Mp4InfoReader {
         
         if (box.find(mvhdBuffer, false, Mp4BoxIdentifier.STSD.getName())) {
             Mp4StsdBox stsd = new Mp4StsdBox(mvhdBuffer);       	
-//        	mvhdBuffer.skip(box.getLength());
 
             ///Level 7-Searching for "mp4a within "stsd"
         	if (box.find(mvhdBuffer, false, Mp4BoxIdentifier.MP4A.getName(), Mp4BoxIdentifier.DRMS.getName(), Mp4BoxIdentifier.ALAC.getName())) {

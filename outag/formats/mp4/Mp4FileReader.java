@@ -1,11 +1,9 @@
 package outag.formats.mp4;
 
-import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import outag.formats.EncodingInfo;
 import outag.formats.Tag;
-import outag.formats.exceptions.CannotReadException;
 import outag.formats.generic.AudioFileReader;
 import outag.formats.mp4.util.Mp4InfoReader;
 import outag.formats.mp4.util.Mp4TagReader;
@@ -18,7 +16,7 @@ public class Mp4FileReader extends AudioFileReader {
 		return ir.read(raf);
 	}
 	
-	protected Tag getTag( RandomAccessFile raf )  throws CannotReadException, IOException {
+	protected Tag getTag( RandomAccessFile raf )  throws Exception {
 		return tr.read(raf);
 	}
 }
