@@ -20,9 +20,11 @@ public class Mp4Box {
     }
     
     public boolean find(Parseable f, boolean throw_error, String ... box_ids) throws Exception {
+    	if (box_ids.length == f.available()) return false;
+    	
     	init(f);
     	
-    	if (box_ids.length == 0) return f.available() > 0;
+    	if (box_ids.length == 0) return true;
     	
     	try {
 	    	while(f.available() > 0) {

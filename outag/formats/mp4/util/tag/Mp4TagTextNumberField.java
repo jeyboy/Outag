@@ -1,7 +1,7 @@
 package outag.formats.mp4.util.tag;
 
-import java.io.UnsupportedEncodingException;
-
+import java.io.IOException;
+import outag.file_presentation.JBBuffer;
 import outag.formats.generic.Utils;
 
 public class Mp4TagTextNumberField extends Mp4TagTextField {
@@ -10,7 +10,7 @@ public class Mp4TagTextNumberField extends Mp4TagTextField {
         super(id, n);
     }
     
-    public Mp4TagTextNumberField(String id, byte[] raw) throws UnsupportedEncodingException {
+    public Mp4TagTextNumberField(String id, JBBuffer raw) throws IOException {
         super(id, raw);
     }
     
@@ -18,7 +18,8 @@ public class Mp4TagTextNumberField extends Mp4TagTextField {
         return Utils.getSizeBigEndian(Integer.parseInt(content));
     }
     
-    protected void build(byte[] raw) throws UnsupportedEncodingException {
-        this.content = Utils.getNumberBigEndian(raw, 16, 19)+"";
+    protected void build(JBBuffer raw) throws IOException {
+    	raw.skip(16);
+    	this.content = raw.UInt() + "";
     }
 }

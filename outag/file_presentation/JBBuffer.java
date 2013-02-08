@@ -14,6 +14,8 @@ public class JBBuffer extends Parseable {
 
 	public byte get() { return base.get();	}
 	
+	public byte get(int index) { return base.get(index);	}
+	
 	public int read() { return base.get();	}
 
 	public int read(byte[] array) throws IOException { base.get(array); return array.length; }

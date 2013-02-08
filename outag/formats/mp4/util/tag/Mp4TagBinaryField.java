@@ -1,7 +1,7 @@
 package outag.formats.mp4.util.tag;
 
-import java.io.UnsupportedEncodingException;
-
+import java.io.IOException;
+import outag.file_presentation.JBBuffer;
 import outag.formats.generic.TagField;
 import outag.formats.generic.Utils;
 
@@ -11,7 +11,7 @@ public class Mp4TagBinaryField extends Mp4TagField {
     
     public Mp4TagBinaryField(String id) { super(id); }
     
-    public Mp4TagBinaryField(String id, byte[] raw) throws UnsupportedEncodingException {
+    public Mp4TagBinaryField(String id, JBBuffer raw) throws IOException {
         super(id, raw);
     }
 
@@ -44,14 +44,14 @@ public class Mp4TagBinaryField extends Mp4TagField {
 		return b;
     }
     
-    protected void build(byte[] raw) {
-        int dataSize = Utils.getNumberBigEndian(raw, 0, 3);
+    protected void build(JBBuffer raw) throws IOException {   	
+        int dataSize = raw.UInt();
         
         this.dataBytes = new byte[dataSize - 16];
         for(int i = 16; i<dataSize; i++)
-            this.dataBytes[i-16] = raw[i];
+            this.dataBytes[i-16] = raw.get(i);
         
-        this.isBinary = ((raw[11]&0x01) == 0);
+        this.isBinary = ((raw.get(11) & 0x01) == 0);
     }
     
     public boolean isBinary() { return isBinary; }

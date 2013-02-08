@@ -1,7 +1,9 @@
 package outag.formats.mp4.util.tag;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import outag.file_presentation.JBBuffer;
 import outag.formats.generic.TagField;
 import outag.formats.generic.TagTextField;
 import outag.formats.generic.Utils;
@@ -9,8 +11,7 @@ import outag.formats.generic.Utils;
 public class Mp4TagTextField extends Mp4TagField implements TagTextField {
 	protected String content;
 
-	public Mp4TagTextField(String id, byte[] raw)
-			throws UnsupportedEncodingException {
+	public Mp4TagTextField(String id, JBBuffer raw) throws IOException {
 		super(id, raw);
 	}
 
@@ -19,22 +20,20 @@ public class Mp4TagTextField extends Mp4TagField implements TagTextField {
 		this.content = content;
 	}
 
-	protected void build(byte[] raw) throws UnsupportedEncodingException {
-		int dataSize = Utils.getNumberBigEndian(raw, 0, 3);
-		this.content = Utils
-				.getString(raw, 16, dataSize - 8 - 8, getEncoding());
+	protected void build(JBBuffer raw) throws IOException {
+		int dataSize = raw.UInt();
+		raw.skip(12); // to 16 byte
+		this.content = raw.Str(dataSize - 16, getEncoding());
 	}
 
-
 	public void copyContent(TagField field) {
-		if (field instanceof Mp4TagTextField) {
+		if (field instanceof Mp4TagTextField)
 			this.content = ((Mp4TagTextField) field).getContent();
-		}
 	}
 
 	public String getContent() { return content; }
 
-	// This is overriden in the number data box
+	// This is overridden in the number data box
 	protected byte[] getDataBytes() throws UnsupportedEncodingException {
 		return content.getBytes(getEncoding());
 	}
