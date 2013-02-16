@@ -1,7 +1,6 @@
 package outag.formats.asf.util;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
 import java.util.Iterator;
 
 import outag.formats.Tag;
@@ -13,6 +12,7 @@ import outag.formats.asf.data.wrapper.ContentDescriptorTagField;
 import outag.formats.generic.GenericTag;
 import outag.formats.generic.TagField;
 import outag.formats.generic.TagTextField;
+import outag.reference.GenreTypes;
 
 /** Provides functionality to convert
  * {@link outag.formats.asf.data.AsfHeader} objects into
@@ -62,8 +62,8 @@ public class TagConverter {
 					ContentDescriptor.TYPE_STRING);
 			tmp.setStringValue(tag.getFirstGenre());
 			description.addOrReplace(tmp);
-			int index = Arrays.asList(Tag.DEFAULT_GENRES).indexOf(
-					tag.getFirstGenre());
+			
+			int index = GenreTypes.getCodeByName(tag.getFirstGenre());
 			if (index != -1) {
 				tmp = new ContentDescriptor(ContentDescriptor.ID_GENREID,
 						ContentDescriptor.TYPE_STRING);

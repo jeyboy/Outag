@@ -1,71 +1,126 @@
 package outag.formats.mp4.util.tag;
 
-import java.io.IOException;
-import outag.file_presentation.JBBuffer;
-import outag.formats.generic.TagField;
-import outag.formats.generic.Utils;
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 
-public class Mp4TagBinaryField extends Mp4TagField {
+import outag.file_presentation.JBBuffer;
+import outag.formats.mp4.util.box.Mp4Box;
+
+/**
+ * Represents binary data
+ * <p/>
+ * <p>Subclassed by cover art field,
+ * TODO unaware of any other binary fields at the moment
+ */
+public class Mp4TagBinaryField extends Mp4TagField
+{
+    protected int dataSize;
     protected byte[] dataBytes;
     protected boolean isBinary = false;
-    
-    public Mp4TagBinaryField(String id) { super(id); }
-    
-    public Mp4TagBinaryField(String id, JBBuffer raw) throws IOException {
+
+    /**
+     * Construct an empty Binary Field
+     *
+     * @param id
+     */
+    public Mp4TagBinaryField(Mp4Box head)
+    {
+        super(head);
+    }
+
+    /**
+     * Construct new binary field with binarydata provided
+     *
+     * @param id
+     * @param data
+     * @throws UnsupportedEncodingException
+     */
+    public Mp4TagBinaryField(String id, byte[] data)
+    {
+        super(id);
+        this.dataBytes = data;
+    }
+
+    /**
+     * Construct binary field from rawdata of audio file
+     *
+     * @param id
+     * @param raw
+     * @throws UnsupportedEncodingException
+     */
+    public Mp4TagBinaryField(String id, ByteBuffer raw) throws UnsupportedEncodingException
+    {
         super(id, raw);
     }
 
-    public byte[] getRawContent() {
-        byte[] data = dataBytes;
-        byte[] b = new byte[4 + 4 + 4 + 4 + 4 + 4 + data.length];
-        
-        int offset = 0;
-		Utils.copy(Utils.getSizeBigEndian(b.length), b, offset);
-		offset += 4;
-		
-		Utils.copy(Utils.getDefaultBytes(getId()), b, offset);
-		offset += 4;
-		
-		Utils.copy(Utils.getSizeBigEndian(4+4+4+4+data.length), b, offset);
-		offset += 4;
-		
-		Utils.copy(Utils.getDefaultBytes("data"), b, offset);
-		offset += 4;
-		
-		Utils.copy(new byte[] {0, 0, 0, (byte) (isBinary() ? 0 : 1) }, b, offset);
-		offset += 4;
-		
-		Utils.copy(new byte[] {0, 0, 0, 0}, b, offset);
-		offset += 4;
-		
-		Utils.copy(data, b, offset);
-		offset += data.length;
-		
-		return b;
+    public Mp4FieldType getFieldType()
+    {
+        //TODO dont know what value this should be do we actually have any binary fields other
+        //than cover art
+        return Mp4FieldType.IMPLICIT;
     }
-    
-    protected void build(JBBuffer raw) throws IOException {   	
-        int dataSize = raw.UInt();
-        
-        this.dataBytes = new byte[dataSize - 16];
-        for(int i = 16; i<dataSize; i++)
-            this.dataBytes[i-16] = raw.get(i);
-        
-        this.isBinary = ((raw.get(11) & 0x01) == 0);
+
+    /**
+     * Used when creating raw content
+     *
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    protected byte[] getDataBytes() throws UnsupportedEncodingException
+    {
+        return dataBytes;
     }
-    
-    public boolean isBinary() { return isBinary; }
-    
-    public boolean isEmpty() { return this.dataBytes.length == 0; }
-    
-    public byte[] getData() { return this.dataBytes; }
-    
-    public void setData(byte[] d) { this.dataBytes = d; }
-    
-    public void copyContent(TagField field) {
-        if(field instanceof Mp4TagBinaryField) {
+
+    protected void build(ByteBuffer raw)
+    {
+        Mp4BoxHeader header = new Mp4BoxHeader(raw);
+        dataSize = header.getDataLength();
+
+        //Skip the version and length fields
+        raw.position(raw.position() + Mp4DataBox.PRE_DATA_LENGTH);
+
+        //Read the raw data into byte array
+        this.dataBytes = new byte[dataSize - Mp4DataBox.PRE_DATA_LENGTH];
+        for (int i = 0; i < dataBytes.length; i++)
+        {
+            this.dataBytes[i] = raw.get();
+        }
+
+        //After returning buffers position will be after the end of this atom
+    }
+
+    public boolean isBinary()
+    {
+        return isBinary;
+    }
+
+    public boolean isEmpty()
+    {
+        return this.dataBytes.length == 0;
+    }
+
+    public int getDataSize()
+    {
+        return dataSize;
+
+    }
+
+    public byte[] getData()
+    {
+        return this.dataBytes;
+    }
+
+    public void setData(byte[] d)
+    {
+        this.dataBytes = d;
+    }
+
+    public void copyContent(TagField field)
+    {
+        if (field instanceof Mp4TagBinaryField)
+        {
             this.dataBytes = ((Mp4TagBinaryField) field).getData();
-            this.isBinary = ((Mp4TagBinaryField) field).isBinary();
+            this.isBinary = field.isBinary();
         }
     }
 }

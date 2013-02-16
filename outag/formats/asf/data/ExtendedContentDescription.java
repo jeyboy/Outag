@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 
-import outag.formats.Tag;
 import outag.formats.asf.util.Utils;
+import outag.reference.GenreTypes;
 
 /** This structure represents the data of a chunk, wich contains extended content description. <br>
  * These properties are simply represented by {@link outag.formats.asf.data.ContentDescriptor} */
@@ -110,8 +110,8 @@ public class ExtendedContentDescription extends Chunk {
                     result = result.substring(1, result.length() - 1);
                     try {
                         int genreNum = Integer.parseInt(result);
-                        if (genreNum >= 0 && genreNum < Tag.DEFAULT_GENRES.length)
-                            result = Tag.DEFAULT_GENRES[genreNum];
+                        if (genreNum >= 0 && genreNum < GenreTypes.getMaxStandardGenreId())
+                            result = GenreTypes.getNameByCode(genreNum);
                     } catch (NumberFormatException e) {
                         // Do nothing
                     }

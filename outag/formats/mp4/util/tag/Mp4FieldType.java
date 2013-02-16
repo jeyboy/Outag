@@ -26,7 +26,7 @@ public enum Mp4FieldType {
     UPC(0x19),
     COVERART_BMP(0x1B);
 
-    private int fileClassId;
+    int fileClassId;
 
     Mp4FieldType(int fileClassId) {
         this.fileClassId = fileClassId;

@@ -1,25 +1,85 @@
 package outag.formats.mp4.util.tag;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import outag.file_presentation.JBBuffer;
-import outag.formats.generic.Utils;
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.util.List;
 
+import outag.file_presentation.JBBuffer;
+
+/** Represents simple text field that contains an array of number, <br>
+ * But reads the data content as an array of 16 bit unsigned numbers */
 public class Mp4TagTextNumberField extends Mp4TagTextField {
-    
-    public Mp4TagTextNumberField(String id, String n) {
-        super(id, n);
+    public static final int NUMBER_LENGTH = 2;
+
+    //Holds the numbers decoded
+    protected List<Short> numbers;
+
+    /** Create a new number, already parsed in subclasses
+     * @param id
+     * @param numberArray */
+    public Mp4TagTextNumberField(String id, String numberArray) { super(id, numberArray); }
+
+    public Mp4TagTextNumberField(String id, JBBuffer data) throws UnsupportedEncodingException {
+        super(id, data);
     }
-    
-    public Mp4TagTextNumberField(String id, JBBuffer raw) throws IOException {
-        super(id, raw);
+
+    /**
+     * Recreate the raw data content from the list of numbers
+     *
+     * @return
+     */
+    protected byte[] getDataBytes()
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        for (Short number : numbers)
+        {
+            try
+            {
+                baos.write(Utils.getSizeBEInt16(number));
+            }
+            catch (IOException e)
+            {
+                //This should never happen because we are not writing to file at this point.
+                throw new RuntimeException(e);
+            }
+        }
+        return baos.toByteArray();
     }
-    
-    protected byte[] getDataBytes() {
-        return Utils.getSizeBigEndian(Integer.parseInt(content));
+
+    public void copyContent(TagField field)
+    {
+        if (field instanceof Mp4TagTextNumberField)
+        {
+            this.content = ((Mp4TagTextNumberField) field).getContent();
+            this.numbers = ((Mp4TagTextNumberField) field).getNumbers();
+        }
     }
-    
-    protected void build(JBBuffer raw) throws IOException {
-    	raw.skip(16);
-    	this.content = raw.UInt() + "";
+
+    /**
+     * @return type numeric
+     */
+    public Mp4FieldType getFieldType()
+    {
+        return Mp4FieldType.IMPLICIT;
+    }
+
+    protected void build(ByteBuffer data) throws UnsupportedEncodingException
+    {
+        //Data actually contains a 'Data' Box so process data using this
+        Mp4BoxHeader header = new Mp4BoxHeader(data);
+        Mp4DataBox databox = new Mp4DataBox(header, data);
+        dataSize = header.getDataLength();
+        content = databox.getContent();
+        numbers = databox.getNumbers();
+    }
+
+    /**
+     * @return the individual numbers making up this field
+     */
+    public List<Short> getNumbers()
+    {
+        return numbers;
     }
 }

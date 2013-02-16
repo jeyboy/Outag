@@ -9,7 +9,9 @@ public class Mp4Box {
     public String getId() { return id; }
     
     public int getLength() { return length - 8; }
-//    [0, 0, 0, 51, 101, 115, 100, 115]
+    
+    public String getEncoding() { return "CHARSET_UTF_8"; }
+
     public void init(Parseable f) throws Exception {
     	length = f.UInt();
         id = f.Str(4);
