@@ -5,16 +5,13 @@ import outag.formats.mp4.util.tag.Mp4FieldType;
 /** Starting list of known mp4 metadata fields that follow the Parent,Data or ---,issuer,name,data
  * convention. Atoms that contain metadata in other formats are not listed here because they need to be processed
  * specially. <br>
- * <p>Simple metaitems use the parent atom id as their identifier whereas reverse dns (----) atoms use
+ * Simple metaitems use the parent atom id as their identifier whereas reverse dns (----) atoms use
  * the reversedns,issuer and name fields as their identifier. When the atom is non-0standard but follws the rules
- * we list it here with an additional Tagger field to indicate where the field was originally designed.
- * <p/>
+ * we list it here with an additional Tagger field to indicate where the field was originally designed. <br>
  * From:
  * http://www.hydrogenaudio.org/forums/index.php?showtopic=29120&st=0&p=251686&#entry251686
  * http://wiki.musicbrainz.org/PicardQt/TagMapping
- * http://atomicparsley.sourceforge.net/mpeg-4files.html
- * <p/>
- * <p/> */
+ * http://atomicparsley.sourceforge.net/mpeg-4files.html */
 public enum Mp4FieldKey {
     ARTIST("©ART", Mp4TagFieldSubType.TEXT, Mp4FieldType.TEXT),
     ALBUM("©alb", Mp4TagFieldSubType.TEXT, Mp4FieldType.TEXT),

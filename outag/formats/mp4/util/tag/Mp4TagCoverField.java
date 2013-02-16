@@ -8,7 +8,7 @@ import outag.file_presentation.JBBuffer;
 import outag.reference.ImageFormats;
 
 /** Represents Cover Art
- * <br>Note:Within this library we have a seperate TagCoverField for every image stored, however this does not map
+ * <br>Note:Within this library we have a separate TagCoverField for every image stored, however this does not map
  * very directly to how they are physically stored within a file, because all are stored under a single covr atom, so
  * a more complex conversion has to be done then for other fields when writing multiple images back to file. */
 public class Mp4TagCoverField extends Mp4TagBinaryField {
@@ -18,13 +18,11 @@ public class Mp4TagCoverField extends Mp4TagBinaryField {
     //may have data and name atom
     private int dataAndHeaderSize;
 
-    /** Empty CoverArt Field */
-    public Mp4TagCoverField() { super(Mp4FieldKey.ARTWORK.getFieldName()); }
+//    /** Empty CoverArt Field */
+//    public Mp4TagCoverField() { super(Mp4FieldKey.ARTWORK.getFieldName()); }
 
     /** @return data and header size */
-    public int getDataAndHeaderSize() {
-        return dataAndHeaderSize;
-    }
+    public int getDataAndHeaderSize() { return dataAndHeaderSize; }
 
     /** Construct CoverField by reading data from audio file
      * @param raw

@@ -6,7 +6,6 @@ import java.io.UnsupportedEncodingException;
 import outag.file_presentation.JBBuffer;
 import outag.formats.generic.TagField;
 import outag.formats.generic.Utils;
-import outag.formats.mp4.util.box.Mp4Box;
 
 public abstract class Mp4TagField implements TagField {
     protected String id;
@@ -21,11 +20,11 @@ public abstract class Mp4TagField implements TagField {
 		        id.equals("\u00A9cmt")  ||
 		        id.equals("\u00A9gen")  ||
 		        id.equals("\u00A9too")  ||
-		        id.equals("\u00A9wrt")    )
+		        id.equals("\u00A9wrt"))
             return new Mp4TagTextField(id, raw);
         
         else if(id.equals("covr"))
-            return new Mp4TagCoverField(raw);
+            return new Mp4TagCoverField(raw.get(new byte[(int) raw.available()]));
         
         return new Mp4TagBinaryField(id, raw);    	
     }

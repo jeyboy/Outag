@@ -28,13 +28,9 @@ public enum Mp4FieldType {
 
     int fileClassId;
 
-    Mp4FieldType(int fileClassId) {
-        this.fileClassId = fileClassId;
-    }
+    Mp4FieldType(int fileClassId) { this.fileClassId = fileClassId; }
 
-    public int getFileClassId() {
-        return fileClassId;
-    }
+    public int getFileClassId() { return fileClassId; }
 
     private final static HashMap <Integer, Mp4FieldType> fileClassIdFiedTypeMap;
 
