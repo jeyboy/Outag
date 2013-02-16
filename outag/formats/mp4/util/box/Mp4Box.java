@@ -8,7 +8,9 @@ public class Mp4Box {
     
     public String getId() { return id; }
     
-    public int getLength() { return length - 8; }
+    public int getLength() { return length - getHeadLength(); }
+    
+    public int getHeadLength() { return 8; }
     
     public String getEncoding() { return "CHARSET_UTF_8"; }
 

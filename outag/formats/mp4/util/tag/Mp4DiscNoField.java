@@ -12,7 +12,6 @@ import java.util.ArrayList;
  * Disc Number:2 bytes
  * Total no of Discs:2 bytes */
 public class Mp4DiscNoField extends Mp4TagTextNumberField {
-    private static final int NONE_VALUE_INDEX = 0;
     private static final int DISC_NO_INDEX = 1;
     private static final int DISC_TOTAL_INDEX = 2;
 
@@ -97,43 +96,24 @@ public class Mp4DiscNoField extends Mp4TagTextNumberField {
         content = sb.toString();
     }
 
-    /**
-     * @return
-     */
-    public Short getDiscNo()
-    {
-        return numbers.get(DISC_NO_INDEX);
-    }
+    public Short getDiscNo() { return numbers.get(DISC_NO_INDEX); }
 
-    /**
-     * Set Disc No
-     *
-     * @param discNo
-     */
-    public void setDiscNo(int discNo)
-    {
+    /** Set Disc No
+     * @param discNo */
+    public void setDiscNo(int discNo) {
         numbers.set(DISC_NO_INDEX, (short) discNo);
     }
 
-    /**
-     * @return
-     */
-    public Short getDiscTotal()
-    {
-        if(numbers.size()<=DISC_TOTAL_INDEX)
-        {
+    public Short getDiscTotal() {
+        if(numbers.size() <= DISC_TOTAL_INDEX)
             return 0;
-        }
+
         return numbers.get(DISC_TOTAL_INDEX);
     }
 
-    /**
-     * Set total number of discs
-     *
-     * @param discTotal
-     */
-    public void setDiscTotal(int discTotal)
-    {
+    /** Set total number of discs
+     * @param discTotal */
+    public void setDiscTotal(int discTotal) {
         numbers.set(DISC_TOTAL_INDEX, (short) discTotal);
     }
 }

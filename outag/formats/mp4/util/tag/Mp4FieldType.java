@@ -50,7 +50,7 @@ public enum Mp4FieldType {
 
     private static EnumSet<Mp4FieldType> coverArtTypes;
     static {
-        coverArtTypes = EnumSet.of(COVERART_GIF,COVERART_JPEG,COVERART_PNG,COVERART_BMP);
+        coverArtTypes = EnumSet.of(COVERART_GIF, COVERART_JPEG, COVERART_PNG, COVERART_BMP);
     }
 
     public static boolean isCoverArtType(Mp4FieldType mp4FieldType) {
