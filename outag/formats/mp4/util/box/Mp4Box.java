@@ -6,6 +6,9 @@ public class Mp4Box {
     private String id;
     private int length;
     
+    public Mp4Box() {}
+    public Mp4Box(String id) { this.id = id; }
+    
     public String getId() { return id; }
     
     public int getLength() { return length - getHeadLength(); }

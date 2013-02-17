@@ -1,7 +1,5 @@
 package outag.formats.mp4.util.tag;
 
-import java.util.ArrayList;
-
 import outag.file_presentation.JBBuffer;
 import outag.formats.mp4.util.box.Mp4Box;
 import outag.formats.mp4.util.box.Mp4DataBox;
@@ -15,58 +13,58 @@ public class Mp4DiscNoField extends Mp4TagTextNumberField {
     private static final int DISC_NO_INDEX = 1;
     private static final int DISC_TOTAL_INDEX = 2;
 
-    /** Create new Disc Field parsing the String for the discno/total
-     * @param discValue
-     * @throws Exception 
-     * @throws org.jaudiotagger.tag.FieldDataInvalidException */
-    public Mp4DiscNoField(String discValue) throws Exception {
-        super(Mp4FieldKey.DISCNUMBER.getFieldName(), discValue);
+//    /** Create new Disc Field parsing the String for the discno/total
+//     * @param discValue
+//     * @throws Exception 
+//     * @throws org.jaudiotagger.tag.FieldDataInvalidException */
+//    public Mp4DiscNoField(String discValue) throws Exception {
+//        super(Mp4FieldKey.DISCNUMBER.getFieldName(), discValue);
+//
+//        numbers = new ArrayList<Short>();
+//        numbers.add(new Short("0"));
+//
+//        String values[] = discValue.split("/");
+//        switch (values.length) {
+//            case 1:
+//                try { numbers.add(Short.parseShort(values[0])); }
+//                catch (NumberFormatException nfe) {
+//                    throw new Exception("Value of:" + values[0] + " is invalid for field:" + getId());
+//                }
+//                numbers.add(new Short("0"));
+//                break;
+//            case 2:
+//                try { numbers.add(Short.parseShort(values[0])); }
+//                catch (NumberFormatException nfe) {
+//                    throw new Exception("Value of:" + values[0] + " is invalid for field:" + getId());
+//                }
+//                try { numbers.add(Short.parseShort(values[1])); }
+//                catch (NumberFormatException nfe) {
+//                    throw new Exception("Value of:" + values[1] + " is invalid for field:" + getId());
+//                }
+//                break;
+//            default:
+//                throw new Exception("Value is invalid for field:" + getId());
+//        }
+//    }
+//
+//
+//    /** Create new Disc No field with only discNo
+//     * @param discNo */
+//    public Mp4DiscNoField(int discNo) {	this(discNo, 0); }
+//
+//    /** Create new Disc No Field with Disc No and total number of discs
+//     * @param discNo
+//     * @param total */
+//    public Mp4DiscNoField(int discNo, int total) {
+//        super(Mp4FieldKey.DISCNUMBER.getFieldName(), String.valueOf(discNo));
+//        numbers = new ArrayList<Short>();
+//        numbers.add(new Short("0"));
+//        numbers.add((short) discNo);
+//        numbers.add((short) total);
+//    }
 
-        numbers = new ArrayList<Short>();
-        numbers.add(new Short("0"));
-
-        String values[] = discValue.split("/");
-        switch (values.length) {
-            case 1:
-                try { numbers.add(Short.parseShort(values[0])); }
-                catch (NumberFormatException nfe) {
-                    throw new Exception("Value of:" + values[0] + " is invalid for field:" + id);
-                }
-                numbers.add(new Short("0"));
-                break;
-            case 2:
-                try { numbers.add(Short.parseShort(values[0])); }
-                catch (NumberFormatException nfe) {
-                    throw new Exception("Value of:" + values[0] + " is invalid for field:" + id);
-                }
-                try { numbers.add(Short.parseShort(values[1])); }
-                catch (NumberFormatException nfe) {
-                    throw new Exception("Value of:" + values[1] + " is invalid for field:" + id);
-                }
-                break;
-            default:
-                throw new Exception("Value is invalid for field:" + id);
-        }
-    }
-
-
-    /** Create new Disc No field with only discNo
-     * @param discNo */
-    public Mp4DiscNoField(int discNo) {	this(discNo, 0); }
-
-    /** Create new Disc No Field with Disc No and total number of discs
-     * @param discNo
-     * @param total */
-    public Mp4DiscNoField(int discNo, int total) {
-        super(Mp4FieldKey.DISCNUMBER.getFieldName(), String.valueOf(discNo));
-        numbers = new ArrayList<Short>();
-        numbers.add(new Short("0"));
-        numbers.add((short) discNo);
-        numbers.add((short) total);
-    }
-
-    public Mp4DiscNoField(String id, JBBuffer data) throws Exception {
-        super(id, data);
+    public Mp4DiscNoField(Mp4Box head, JBBuffer data) throws Exception {
+        super(head, data);
     }
 
     protected void build(JBBuffer data) throws Exception {

@@ -15,11 +15,12 @@ public class Mp4TagRawBinaryField extends Mp4TagField {
     /** Construct binary field from raw data of audio file
      * @param header
      * @param raw
+     * @throws Exception 
      * @throws java.io.UnsupportedEncodingException */
-    public Mp4TagRawBinaryField(Mp4Box header, JBBuffer raw) {
-        super(header.getId());
-        dataSize = header.getLength();
-        build(raw);
+    public Mp4TagRawBinaryField(Mp4Box head, JBBuffer raw) throws Exception {
+        super(head, raw);
+        dataSize = head.getLength();
+//        build(header, raw);
     }
 
     public Mp4FieldType getFieldType() { return Mp4FieldType.IMPLICIT; }
@@ -32,7 +33,7 @@ public class Mp4TagRawBinaryField extends Mp4TagField {
     /** Build from data
      * <br>After returning buffers position will be after the end of this atom
      * @param raw */
-    protected void build(JBBuffer raw) {
+    protected void build(Mp4Box head, JBBuffer raw) {
         //Read the raw data into byte array
         this.dataBytes = new byte[dataSize];
         for (int i = 0; i < dataBytes.length; i++)

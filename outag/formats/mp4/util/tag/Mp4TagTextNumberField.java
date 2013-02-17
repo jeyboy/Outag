@@ -20,8 +20,8 @@ public class Mp4TagTextNumberField extends Mp4TagTextField {
      * @param numberArray */
     public Mp4TagTextNumberField(String id, String numberArray) { super(id, numberArray); }
 
-    public Mp4TagTextNumberField(String id, JBBuffer data) throws Exception {
-        super(id, data);
+    public Mp4TagTextNumberField(Mp4Box head, JBBuffer data) throws Exception {
+        super(head, data);
     }
 
 //    /** Recreate the raw data content from the list of numbers */
@@ -49,7 +49,7 @@ public class Mp4TagTextNumberField extends Mp4TagTextField {
     /** @return type numeric */
     public Mp4FieldType getFieldType() { return Mp4FieldType.IMPLICIT; }
 
-    protected void build(JBBuffer data) throws Exception {
+    protected void build(Mp4Box head, JBBuffer data) throws Exception {
         //Data actually contains a 'Data' Box so process data using this
     	Mp4Box header = Mp4Box.init(data, false);
         Mp4DataBox databox = new Mp4DataBox(header, data);

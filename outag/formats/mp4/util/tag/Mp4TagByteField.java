@@ -16,11 +16,11 @@ public class Mp4TagByteField extends Mp4TagTextField {
      * @param raw
      * @throws Exception 
      * @throws UnsupportedEncodingException */
-    public Mp4TagByteField(String id, JBBuffer raw) throws Exception { super(id, raw); }
+    public Mp4TagByteField(Mp4Box head, JBBuffer raw) throws Exception { super(head, raw); }
 
     public Mp4FieldType getFieldType() { return Mp4FieldType.INTEGER; }
 
-    protected void build(JBBuffer data) throws Exception {
+    protected void build(Mp4Box head, JBBuffer data) throws Exception {
         //Data actually contains a 'Data' Box so process data using this
     	Mp4Box header = Mp4Box.init(data, false);
         Mp4DataBox databox = new Mp4DataBox(header, data);

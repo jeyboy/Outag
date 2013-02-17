@@ -14,25 +14,12 @@ public class Mp4TagBinaryField extends Mp4TagField {
     protected byte[] dataBytes;
     protected boolean isBinary = false;
 
-    /** Construct an empty Binary Field
-     * @param id */
-    public Mp4TagBinaryField(String string) { super(string); }
-
-    /** Construct new binary field with binary data provided
-     * @param id
-     * @param data
-     * @throws UnsupportedEncodingException */
-    public Mp4TagBinaryField(String id, byte[] data) {
-        super(id);
-        this.dataBytes = data;
-    }
-
-    /** Construct binary field from rawdata of audio file
+    /** Construct binary field from raw data of audio file
      * @param id
      * @param raw
      * @throws Exception */
-    public Mp4TagBinaryField(String id, JBBuffer raw) throws Exception {
-        super(id, raw);
+    public Mp4TagBinaryField(Mp4Box head, JBBuffer raw) throws Exception {
+        super(head, raw);
     }
 
     public Mp4FieldType getFieldType() {
@@ -46,7 +33,7 @@ public class Mp4TagBinaryField extends Mp4TagField {
      * @throws UnsupportedEncodingException */
     protected byte[] getDataBytes() throws Exception { return dataBytes; }
 
-    protected void build(JBBuffer raw) throws Exception {
+    protected void build(Mp4Box head, JBBuffer raw) throws Exception {
     	Mp4Box header = Mp4Box.init(raw, false);
         dataSize = header.getLength();
 
