@@ -17,6 +17,7 @@ public class JBBuffer extends Parseable {
 	public byte get(int index) { return base.get(index); }
 	
 	public byte [] get(byte [] buffer) { base.get(buffer);  return buffer; }
+	public byte [] get(byte [] buffer, int offset, int length) { base.get(buffer, offset, length);  return buffer; }
 	
 	public int read() { return base.get();	}
 
@@ -31,6 +32,7 @@ public class JBBuffer extends Parseable {
 	public JBBuffer move(int new_pos) { base.position(new_pos); return this; }
 	
 	public long pos() { return base.position(); }
+	public int ipos() { return base.position(); }
 	
 	public long available() { return base.capacity() - base.position(); }
 	

@@ -1,13 +1,10 @@
 package outag.formats.mp4.util.tag;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
 import java.util.List;
 
 import outag.file_presentation.JBBuffer;
 import outag.formats.generic.TagField;
+import outag.formats.mp4.util.box.Mp4Box;
 import outag.formats.mp4.util.box.Mp4DataBox;
 
 /** Represents simple text field that contains an array of number, <br>
@@ -54,9 +51,9 @@ public class Mp4TagTextNumberField extends Mp4TagTextField {
 
     protected void build(JBBuffer data) throws Exception {
         //Data actually contains a 'Data' Box so process data using this
-        Mp4BoxHeader header = new Mp4BoxHeader(data);
+    	Mp4Box header = Mp4Box.init(data, false);
         Mp4DataBox databox = new Mp4DataBox(header, data);
-        dataSize = header.getDataLength();
+        dataSize = header.getLength();
         content = databox.getContent();
         numbers = databox.getNumbers();
     }

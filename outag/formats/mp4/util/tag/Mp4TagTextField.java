@@ -1,9 +1,6 @@
 package outag.formats.mp4.util.tag;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-
 import outag.file_presentation.JBBuffer;
 import outag.formats.generic.TagField;
 import outag.formats.generic.TagTextField;
@@ -25,9 +22,9 @@ import outag.formats.mp4.util.box.Mp4DataBox;
  *          :data
  * </pre>
  * <p/>
- * <p>Note:This class is initilized with the child data atom only, the parent data has already been processed, this may
- * change as it seems that code should probably be enscapulated into this. Whereas the raw content returned by the
- * getRawContent() contais the byte data for parent and child. */
+ * <p>Note:This class is initialized with the child data atom only, the parent data has already been processed, this may
+ * change as it seems that code should probably be encapsulated into this. Whereas the raw content returned by the
+ * getRawContent() contains the byte data for parent and child. */
 public class Mp4TagTextField extends Mp4TagField implements TagTextField {
     protected int dataSize;
     protected String content;
@@ -50,9 +47,9 @@ public class Mp4TagTextField extends Mp4TagField implements TagTextField {
 
     protected void build(JBBuffer data) throws Exception {
         //Data actually contains a 'Data' Box so process data using this
-        Mp4BoxHeader header = new Mp4BoxHeader(data);
+    	Mp4Box header = Mp4Box.init(data, false);
         Mp4DataBox databox = new Mp4DataBox(header, data);
-        dataSize = header.getDataLength();
+        dataSize = header.getLength();
         content = databox.getContent();
     }
 

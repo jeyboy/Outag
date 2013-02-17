@@ -1,10 +1,9 @@
 package outag.formats.mp4.util.tag;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-
 import outag.file_presentation.JBBuffer;
+import outag.formats.mp4.util.box.Mp4Box;
+import outag.formats.mp4.util.box.Mp4NameBox;
 import outag.reference.ImageFormats;
 
 /** Represents Cover Art
@@ -13,16 +12,6 @@ import outag.reference.ImageFormats;
  * a more complex conversion has to be done then for other fields when writing multiple images back to file. */
 public class Mp4TagCoverField extends Mp4TagBinaryField {
     private Mp4FieldType imageType;
-
-    //Contains the size of each atom including header, required because may only have data atom or
-    //may have data and name atom
-    private int dataAndHeaderSize;
-
-//    /** Empty CoverArt Field */
-//    public Mp4TagCoverField() { super(Mp4FieldKey.ARTWORK.getFieldName()); }
-
-    /** @return data and header size */
-    public int getDataAndHeaderSize() { return dataAndHeaderSize; }
 
     /** Construct CoverField by reading data from audio file
      * @param raw
@@ -67,31 +56,23 @@ public class Mp4TagCoverField extends Mp4TagBinaryField {
         return imageType +":" + dataBytes.length + "bytes";
     }
 
-    protected void build(JBBuffer raw) {
-        Mp4BoxHeader header = new Mp4BoxHeader(raw);
-        dataSize = header.getDataLength();
-        dataAndHeaderSize = header.getLength();
-
+    protected void build(JBBuffer raw) throws Exception {
+    	Mp4Box header = Mp4Box.init(raw, false);
         //Skip the version and length fields
-        raw.position(raw.position() + Mp4DataBox.PRE_DATA_LENGTH);
+        raw.skip((int)raw.pos() + header.getHeadLength());
 
         //Read the raw data into byte array
-        this.dataBytes = new byte[dataSize - Mp4DataBox.PRE_DATA_LENGTH];
+        this.dataBytes = new byte[dataSize - header.getHeadLength()];
         raw.get(dataBytes, 0, dataBytes.length);
 
         //Is there room for another atom (remember actually passed all the data so unless Covr is last atom
         //there will be room even though more likely to be for the text top level atom)
-        int positionAfterDataAtom = raw.position();
-        if (raw.position() + Mp4BoxHeader.HEADER_LENGTH <= raw.limit()) {
+        int positionAfterDataAtom = raw.ipos();
+        if (raw.pos() + header.getHeadLength() <= raw.limit()) {
             //Is there a following name field (not the norm)
-            Mp4BoxHeader nameHeader = new Mp4BoxHeader(raw);
-            if (nameHeader.getId().equals(Mp4NameBox.IDENTIFIER))
-            {
-                dataSize += nameHeader.getDataLength();
-                dataAndHeaderSize += nameHeader.getLength();
-            }
-            else
-                raw.position(positionAfterDataAtom);
+        	Mp4Box nameHeader = Mp4Box.init(raw, false);
+            if (!nameHeader.getId().equals(Mp4NameBox.IDENTIFIER))
+                raw.pos(positionAfterDataAtom);
         }
 
         //After returning buffers position will be after the end of this atom

@@ -1,121 +1,72 @@
 package outag.formats.mp4.util.tag;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
+import outag.file_presentation.JBBuffer;
+import outag.formats.generic.TagField;
+import outag.formats.mp4.util.box.Mp4Box;
 
-/**
- * Represents raw binary data
- * <p/>
- * <p>We use this when we find an atom under the ilst atom that we do not recognise , that does not
- * follow standard conventions in order to save the data without modification so it can be safetly
- * written back to file
- */
-public class Mp4TagRawBinaryField extends Mp4TagField
-{
+/** Represents raw binary data <br>
+ * We use this when we find an atom under the ilst atom that we do not recognize , that does not
+ * follow standard conventions in order to save the data without modification so it can be safely
+ * written back to file */
+public class Mp4TagRawBinaryField extends Mp4TagField {
     protected int dataSize;
     protected byte[] dataBytes;
 
-
-    /**
-     * Construct binary field from rawdata of audio file
-     *
+    /** Construct binary field from raw data of audio file
      * @param header
      * @param raw
-     * @throws java.io.UnsupportedEncodingException
-     *
-     */
-    public Mp4TagRawBinaryField(Mp4BoxHeader header, ByteBuffer raw) throws UnsupportedEncodingException
-    {
+     * @throws java.io.UnsupportedEncodingException */
+    public Mp4TagRawBinaryField(Mp4Box header, JBBuffer raw) {
         super(header.getId());
-        dataSize = header.getDataLength();
+        dataSize = header.getLength();
         build(raw);
     }
 
-    public Mp4FieldType getFieldType()
-    {
-        return Mp4FieldType.IMPLICIT;
-    }
+    public Mp4FieldType getFieldType() { return Mp4FieldType.IMPLICIT; }
 
-    /**
-     * Used when creating raw content
-     *
-     * @return
-     * @throws java.io.UnsupportedEncodingException
-     *
-     */
-    protected byte[] getDataBytes() throws UnsupportedEncodingException
-    {
-        return dataBytes;
-    }
+    /**Used when creating raw content
+     * @return */
+    protected byte[] getDataBytes() { return dataBytes; }
 
 
-    /**
-     * Build from data
-     * <p/>
-     * <p>After returning buffers position will be after the end of this atom
-     *
-     * @param raw
-     */
-    protected void build(ByteBuffer raw)
-    {
+    /** Build from data
+     * <br>After returning buffers position will be after the end of this atom
+     * @param raw */
+    protected void build(JBBuffer raw) {
         //Read the raw data into byte array
         this.dataBytes = new byte[dataSize];
         for (int i = 0; i < dataBytes.length; i++)
-        {
             this.dataBytes[i] = raw.get();
-        }
     }
 
-    public boolean isBinary()
-    {
-        return true;
-    }
+    public boolean isBinary() { return true; }
 
-    public boolean isEmpty()
-    {
-        return this.dataBytes.length == 0;
-    }
+    public boolean isEmpty() { return this.dataBytes.length == 0; }
 
-    public int getDataSize()
-    {
-        return dataSize;
+    public int getDataSize() { return dataSize; }
 
-    }
+    public byte[] getData() { return this.dataBytes; }
 
-    public byte[] getData()
-    {
-        return this.dataBytes;
-    }
+    public void setData(byte[] d) { this.dataBytes = d; }
 
-    public void setData(byte[] d)
-    {
-        this.dataBytes = d;
-    }
-
-    public void copyContent(TagField field)
-    {
+    public void copyContent(TagField field) {
         throw new UnsupportedOperationException("not done");
     }
 
-    public byte[] getRawContent() throws UnsupportedEncodingException
-    {
-        logger.fine("Getting Raw data for:" + getId());
-        try
-        {
-            ByteArrayOutputStream outerbaos = new ByteArrayOutputStream();
-            outerbaos.write(Utils.getSizeBEInt32(Mp4BoxHeader.HEADER_LENGTH + dataSize));
-            outerbaos.write(Utils.getDefaultBytes(getId(), "ISO-8859-1"));
-            outerbaos.write(dataBytes);
-            System.out.println("SIZE" + outerbaos.size());
-            return outerbaos.toByteArray();
-        }
-        catch (IOException ioe)
-        {
-            //This should never happen as were not actually writing to/from a file
-            throw new RuntimeException(ioe);
-        }
+    public byte[] getRawContent() {
+//        try {
+//            ByteArrayOutputStream outerbaos = new ByteArrayOutputStream();
+//            outerbaos.write(Utils.getSizeBEInt32(Mp4BoxHeader.HEADER_LENGTH + dataSize));
+//            outerbaos.write(Utils.getDefaultBytes(getId(), "ISO-8859-1"));
+//            outerbaos.write(dataBytes);
+//            System.out.println("SIZE" + outerbaos.size());
+//            return outerbaos.toByteArray();
+//        }
+//        catch (IOException ioe)
+//        {
+//            //This should never happen as were not actually writing to/from a file
+//            throw new RuntimeException(ioe);
+//        }
+    	return null;
     }
-
 }
