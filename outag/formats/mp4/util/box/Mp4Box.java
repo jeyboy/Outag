@@ -43,5 +43,11 @@ public class Mp4Box {
     	catch(Exception e) {  }
     	if (throw_error) throw new Error("Not find compatible headers");
     	return false;
-    }  
+    } 
+    
+    public static Mp4Box init(Parseable f, boolean throw_error, String ... box_ids) throws Exception {
+    	Mp4Box box = new Mp4Box();
+    	box.find(f, throw_error, box_ids);
+    	return box;
+    }
 }

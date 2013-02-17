@@ -32,14 +32,11 @@ public class Mp4TagTextField extends Mp4TagField implements TagTextField {
     protected int dataSize;
     protected String content;
 
-    /**
-     * Construct from File
-     *
+    /**Construct from File
      * @param id   parent id
      * @param data atom data
-     * @throws IOException 
-     */
-    public Mp4TagTextField(String id, JBBuffer raw) throws IOException {
+     * @throws Exception */
+    public Mp4TagTextField(String id, JBBuffer raw) throws Exception {
         super(id, raw);
     }
 
@@ -51,7 +48,7 @@ public class Mp4TagTextField extends Mp4TagField implements TagTextField {
         this.content = content;
     }
 
-    protected void build(JBBuffer data) throws UnsupportedEncodingException {
+    protected void build(JBBuffer data) throws Exception {
         //Data actually contains a 'Data' Box so process data using this
         Mp4BoxHeader header = new Mp4BoxHeader(data);
         Mp4DataBox databox = new Mp4DataBox(header, data);
@@ -72,7 +69,7 @@ public class Mp4TagTextField extends Mp4TagField implements TagTextField {
 
     public Mp4FieldType getFieldType() { return Mp4FieldType.TEXT; }
 
-    public String getEncoding() { return Mp4BoxHeader.CHARSET_UTF_8; }
+    public String getEncoding() { return "UTF-8"; }
 
     public boolean isBinary() { return false; }
 

@@ -1,6 +1,6 @@
 package outag.formats.mp4.util.tag;
 
-import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import outag.file_presentation.JBBuffer;
 import outag.formats.generic.TagField;
@@ -30,8 +30,8 @@ public class Mp4TagBinaryField extends Mp4TagField {
     /** Construct binary field from rawdata of audio file
      * @param id
      * @param raw
-     * @throws IOException */
-    public Mp4TagBinaryField(String id, JBBuffer raw) throws IOException {
+     * @throws Exception */
+    public Mp4TagBinaryField(String id, JBBuffer raw) throws Exception {
         super(id, raw);
     }
 
@@ -46,15 +46,15 @@ public class Mp4TagBinaryField extends Mp4TagField {
      * @throws UnsupportedEncodingException */
     protected byte[] getDataBytes() throws Exception { return dataBytes; }
 
-    protected void build(JBBuffer raw) {
-        Mp4BoxHeader header = new Mp4BoxHeader(raw);
-        dataSize = header.getDataLength();
+    protected void build(JBBuffer raw) throws Exception {
+    	Mp4Box header = Mp4Box.init(raw, false);
+        dataSize = header.getLength();
 
         //Skip the version and length fields
-        raw.position(raw.position() + Mp4DataBox.PRE_DATA_LENGTH);
+        raw.pos((int)raw.pos() + header.getHeadLength());
 
         //Read the raw data into byte array
-        this.dataBytes = new byte[dataSize - Mp4DataBox.PRE_DATA_LENGTH];
+        this.dataBytes = new byte[dataSize - header.getHeadLength()];
         for (int i = 0; i < dataBytes.length; i++)
             this.dataBytes[i] = raw.get();
 
@@ -77,4 +77,8 @@ public class Mp4TagBinaryField extends Mp4TagField {
             this.isBinary = field.isBinary();
         }
     }
+
+	public byte[] getRawContent() throws UnsupportedEncodingException {
+		return null;
+	}
 }

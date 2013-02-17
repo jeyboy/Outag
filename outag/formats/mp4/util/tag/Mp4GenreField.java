@@ -1,13 +1,16 @@
 package outag.formats.mp4.util.tag;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
+
+import outag.file_presentation.JBBuffer;
+import outag.formats.mp4.util.box.Mp4Box;
+import outag.formats.mp4.util.box.Mp4DataBox;
+import outag.reference.GenreTypes;
 
 /** Represents the Genre field , when user has selected from the set list of genres<br>
  * This class allows you to retrieve either the internal genre id, or the display value */
 public class Mp4GenreField extends Mp4TagTextNumberField {
-    public Mp4GenreField(String id, ByteBuffer data) {
+    public Mp4GenreField(String id, JBBuffer data) throws Exception {
         super(id, data);
     }
 
@@ -23,7 +26,7 @@ public class Mp4GenreField extends Mp4TagTextNumberField {
         catch (NumberFormatException nfe) {/* Maybe string presentation */ }
 
         //Is it the String value ?
-        Integer id3GenreId = GenreTypes.getInstanceOf().getIdForValue(genreId);
+        Integer id3GenreId = GenreTypes.getCodeByName(genreId);
         if (id3GenreId != null) {
             if (id3GenreId <= GenreTypes.getMaxStandardGenreId())
                 return true;
@@ -31,21 +34,15 @@ public class Mp4GenreField extends Mp4TagTextNumberField {
         return false;
     }
 
-    /**
-     * Construct genre, if cant find match just default to first genre
-     *
-     * @param genreId key into ID3v1 list (offset by one) or String value in ID3list
-     */
-    public Mp4GenreField(String genreId)
-    {
+    /** Construct genre, if cant find match just default to first genre
+     * @param genreId key into ID3v1 list (offset by one) or String value in ID3list */
+    public Mp4GenreField(String genreId) {
         super(Mp4FieldKey.GENRE.getFieldName(), genreId);
 
         //Is it an id
-        try
-        {
+        try {
             short genreVal = Short.parseShort(genreId);
-            if ((genreVal - 1) <= GenreTypes.getMaxStandardGenreId())
-            {
+            if ((genreVal - 1) <= GenreTypes.getMaxStandardGenreId()) {
                 numbers = new ArrayList<Short>();
                 numbers.add(genreVal);
                 return;
@@ -55,17 +52,12 @@ public class Mp4GenreField extends Mp4TagTextNumberField {
             numbers.add((short) (1));
             return;
         }
-        catch (NumberFormatException nfe)
-        {
-            //Do Nothing test as String instead
-        }
+        catch (NumberFormatException nfe) { /* Do Nothing test as String instead */ }
 
         //Is it the String value ?
-        Integer id3GenreId = GenreTypes.getInstanceOf().getIdForValue(genreId);
-        if (id3GenreId != null)
-        {
-            if (id3GenreId <= GenreTypes.getMaxStandardGenreId())
-            {
+        Integer id3GenreId = GenreTypes.getCodeByName(genreId);
+        if (id3GenreId != null) {
+            if (id3GenreId <= GenreTypes.getMaxStandardGenreId()) {
                 numbers = new ArrayList<Short>();
                 numbers.add((short) (id3GenreId + 1));
                 return;
@@ -75,23 +67,19 @@ public class Mp4GenreField extends Mp4TagTextNumberField {
         numbers.add((short) (1));
     }
 
-    protected void build(ByteBuffer data) throws UnsupportedEncodingException
-    {
+    protected void build(JBBuffer data) throws Exception {
         //Data actually contains a 'Data' Box so process data using this
-        Mp4BoxHeader header = new Mp4BoxHeader(data);
+    	Mp4Box header = Mp4Box.init(data, false);
         Mp4DataBox databox = new Mp4DataBox(header, data);
-        dataSize = header.getDataLength();
+        dataSize = header.getLength();
         numbers = databox.getNumbers();
 
         int genreId = numbers.get(0);
         //Get value, we have to adjust index by one because iTunes labels from one instead of zero
-        content = GenreTypes.getInstanceOf().getValueForId(genreId - 1);
+        content = GenreTypes.getNameByCode(genreId - 1);
 
         //Some apps set genre to invalid value, we dont disguise this by setting content to empty string we leave
         //as null so apps can handle if they wish, but we do display a warning to make them aware.
-        if (content == null)
-        {
-            logger.warning(ErrorMessage.MP4_GENRE_OUT_OF_RANGE.getMsg(genreId));
-        }
+//        if (content == null) warning
     }
 }

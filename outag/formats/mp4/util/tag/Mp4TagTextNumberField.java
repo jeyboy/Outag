@@ -8,6 +8,7 @@ import java.util.List;
 
 import outag.file_presentation.JBBuffer;
 import outag.formats.generic.TagField;
+import outag.formats.mp4.util.box.Mp4DataBox;
 
 /** Represents simple text field that contains an array of number, <br>
  * But reads the data content as an array of 16 bit unsigned numbers */
@@ -22,7 +23,7 @@ public class Mp4TagTextNumberField extends Mp4TagTextField {
      * @param numberArray */
     public Mp4TagTextNumberField(String id, String numberArray) { super(id, numberArray); }
 
-    public Mp4TagTextNumberField(String id, JBBuffer data) throws IOException {
+    public Mp4TagTextNumberField(String id, JBBuffer data) throws Exception {
         super(id, data);
     }
 
@@ -51,7 +52,7 @@ public class Mp4TagTextNumberField extends Mp4TagTextField {
     /** @return type numeric */
     public Mp4FieldType getFieldType() { return Mp4FieldType.IMPLICIT; }
 
-    protected void build(ByteBuffer data) throws UnsupportedEncodingException {
+    protected void build(JBBuffer data) throws Exception {
         //Data actually contains a 'Data' Box so process data using this
         Mp4BoxHeader header = new Mp4BoxHeader(data);
         Mp4DataBox databox = new Mp4DataBox(header, data);

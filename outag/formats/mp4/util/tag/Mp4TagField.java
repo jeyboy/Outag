@@ -10,7 +10,7 @@ import outag.formats.generic.Utils;
 public abstract class Mp4TagField implements TagField {
     protected String id;
     
-    public static Mp4TagField parse(String id, JBBuffer raw) throws IOException {
+    public static Mp4TagField parse(String id, JBBuffer raw) throws Exception {
         if(id.equals("trkn") || id.equals("tmpo") )
             return new Mp4TagTextNumberField(id, raw);
         else if(id.equals("\u00A9ART")  ||
@@ -31,7 +31,7 @@ public abstract class Mp4TagField implements TagField {
     
     public Mp4TagField(String id) { this.id = id; }
     
-    public Mp4TagField(String id, JBBuffer raw) throws IOException {
+    public Mp4TagField(String id, JBBuffer raw) throws Exception {
         this(id);
         build(raw);
     }
@@ -52,5 +52,5 @@ public abstract class Mp4TagField implements TagField {
     
     protected byte[] getIdBytes() { return Utils.getDefaultBytes(getId()); }
     
-    protected abstract void build(JBBuffer raw) throws UnsupportedEncodingException, IOException ;
+    protected abstract void build(JBBuffer raw) throws UnsupportedEncodingException, IOException, Exception ;
 }

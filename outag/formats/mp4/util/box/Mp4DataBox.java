@@ -13,8 +13,7 @@ import outag.formats.mp4.util.tag.Mp4FieldType;
  * :atom version    (1 byte)
  * :atom type flags (3 bytes)
  * :locale field    (4 bytes) //Currently always zero
- * :data
- */
+ * :data */
 public class Mp4DataBox {
     public static final String IDENTIFIER = "data";
 

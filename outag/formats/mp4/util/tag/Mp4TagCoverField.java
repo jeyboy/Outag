@@ -27,8 +27,8 @@ public class Mp4TagCoverField extends Mp4TagBinaryField {
     /** Construct CoverField by reading data from audio file
      * @param raw
      * @param imageType
-     * @throws IOException */
-    public Mp4TagCoverField(JBBuffer raw, Mp4FieldType imageType) throws IOException {
+     * @throws Exception */
+    public Mp4TagCoverField(JBBuffer raw, Mp4FieldType imageType) throws Exception {
         super(Mp4FieldKey.ARTWORK.getFieldName(), raw);
         this.imageType = imageType;
 //        if(!Mp4FieldType.isCoverArtType(imageType)) {
