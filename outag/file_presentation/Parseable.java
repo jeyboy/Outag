@@ -27,6 +27,7 @@ public abstract class Parseable {
 	public long UBELong() throws IOException 	{ return (UBEInt() << 64) + (UBEInt() << 32); }	
 	
 	
+	public short USShort() throws IOException 	{ return (short)((UByte() << 8) + UByte()); }
 	
 	public int UShort() throws IOException 		{ return (UByte() << 8) + UByte(); }
 	

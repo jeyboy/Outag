@@ -53,22 +53,30 @@ public class Mp4DataBox {
     	else if (type == Mp4FieldType.IMPLICIT.getFileClassId()) {
         	data.pos(PRE_DATA_LENGTH);
         	content = "";
-            while(data.pos() < box.getFullLength())
-            	content += "/" + data.UShort();
+        	numbers = new ArrayList<Short>();
+        	
+            while(data.pos() < box.getLength()) {
+            	short temp = data.USShort();
+            	content += "/" + temp;
+            	numbers.add(temp);
+            }
 
-            if (content.length() > 0) content.substring(1);
+            if (content.length() > 0) content = content.substring(1);
     	} 
     	else if (type == Mp4FieldType.INTEGER.getFileClassId()) {
             //TODO byte data length seems to be 1 for pgap and cpil but 2 for tmpo ?
             //Create String representation for display
     		data.pos(PRE_DATA_LENGTH);
-    		content = data.UInt() + "";	        	
+    		content = data.UInt() + "";
+    		
 //                content = Utils.getIntBE(this.dataBuffer, PRE_DATA_LENGTH, header.getDataLength() - 1) + "";
 
             //Songbird uses this type for trkn atom (normally implicit type) is used so just added this code so can be used
             //by the Mp4TrackField atom
     		
         	data.pos(PRE_DATA_LENGTH);
+        	numbers = new ArrayList<Short>();
+        	
             while(data.pos() < box.getLength())
             	numbers.add((short)data.UShort());
             

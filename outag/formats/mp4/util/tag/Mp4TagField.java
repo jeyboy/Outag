@@ -33,7 +33,6 @@ public abstract class Mp4TagField implements TagField {
     			tag.addComment(new Mp4TagTextField(head.getId(), raw).getContent());
     			break;
     		case "gnre":
-    			//TODO: fix bug
     			tag.addGenre(new Mp4GenreField(head.getId(), raw).getContent());
     			break;
     		case Mp4TagReverseDnsField.IDENTIFIER: break;
