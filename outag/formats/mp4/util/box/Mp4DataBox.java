@@ -42,10 +42,8 @@ public class Mp4DataBox {
      * @param dataBuffer data of box (doesn't include parentHeader data)
      * @throws IOException  */
     public Mp4DataBox(Mp4Box box, JBBuffer dataBuffer) throws IOException {
-        //Make slice so operations here don't effect position of main buffer
-    	JBBuffer data = dataBuffer.slice();
-
         //Type
+    	JBBuffer data = dataBuffer.slice();
         type = data.move(Mp4DataBox.TYPE_POS).UInt();
         
     	if (type == Mp4FieldType.TEXT.getFileClassId()) 
@@ -88,6 +86,8 @@ public class Mp4DataBox {
     		content = data.move(PRE_DATA_LENGTH)
     			.Str(box.getLength() - PRE_DATA_LENGTH, box.getEncoding());        		
     	}
+    	else if (type == 256) //possible it mark null value
+    		content = "";
     }
 
     public String getContent() { return content; }

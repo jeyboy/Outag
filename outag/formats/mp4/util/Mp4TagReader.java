@@ -68,7 +68,7 @@ public class Mp4TagReader {
         	}
         	        	
         	while(box.find(moovBuffer, false)) {
-        		Mp4TagField.parse(tag, box, moovBuffer.slice());
+        		Mp4TagField.parse(tag, box, moovBuffer);
         		moovBuffer.skip(box.getLength());
         	}
         }

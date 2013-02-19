@@ -8,36 +8,36 @@ import outag.formats.generic.TagField;
 import outag.formats.generic.Utils;
 import outag.formats.mp4.Mp4Tag;
 import outag.formats.mp4.util.box.Mp4Box;
+import outag.formats.mp4.util.box.Mp4DataBox;
 
 public abstract class Mp4TagField implements TagField {
     protected String id;
     
-    public static void parse(Mp4Tag tag, Mp4Box head, JBBuffer raw) throws Exception {    	
+    public static void parse(Mp4Tag tag, Mp4Box head, JBBuffer raw) throws Exception {
+    	JBBuffer buffer = raw.slice(head.getLength());
     	switch(head.getId()) {
-    		case "ART":
-    			tag.addArtist(new Mp4TagTextField(head.getId(), raw).getContent());
+    		case "ART": tag.addArtist(new Mp4TagTextField(head.getId(), buffer).getContent());
     			break;
-    		case "alb":
-    			tag.addAlbum(new Mp4TagTextField(head.getId(), raw).getContent());
+    		case "alb":	tag.addAlbum(new Mp4TagTextField(head.getId(), buffer).getContent());
     			break;
-    		case "nam":
-    			tag.addTitle(new Mp4TagTextField(head.getId(), raw).getContent());
+    		case "nam":	tag.addTitle(new Mp4TagTextField(head.getId(), buffer).getContent());
     			break;
-    		case "trkn":
-    			tag.addTrack(new Mp4TrackField(head.getId(), raw).getContent());
+    		case "trkn": tag.addTrack(new Mp4TrackField(head.getId(), buffer).getContent());
     			break;
-    		case "day":
-    			tag.addYear(new Mp4TagTextField(head.getId(), raw).getContent());
+    		case "day":	tag.addYear(new Mp4TagTextField(head.getId(), buffer).getContent());
     			break;
-    		case "cmt":
-    			tag.addComment(new Mp4TagTextField(head.getId(), raw).getContent());
+    		case "cmt":	tag.addComment(new Mp4TagTextField(head.getId(), buffer).getContent());
     			break;
-    		case "gnre":
-    			tag.addGenre(new Mp4GenreField(head.getId(), raw).getContent());
+    		case "gnre": tag.addGenre(new Mp4GenreField(head.getId(), buffer).getContent());
     			break;
     		case Mp4TagReverseDnsField.IDENTIFIER: break;
-    		default:
-    			
+    		default:   			
+    			try {
+    				Mp4Box header = Mp4Box.init(buffer, false);
+    		        Mp4DataBox databox = new Mp4DataBox(header, buffer);
+    				tag.addComment(databox.getContent());
+    			}
+    			catch(Exception e) {}    			
     			break;
     	}
     	
