@@ -18,8 +18,8 @@ public class Mp4TagBinaryField extends Mp4TagField {
      * @param id
      * @param raw
      * @throws Exception */
-    public Mp4TagBinaryField(Mp4Box head, JBBuffer raw) throws Exception {
-        super(head, raw);
+    public Mp4TagBinaryField(String id, JBBuffer raw) throws Exception {
+        super(id, raw);
     }
 
     public Mp4FieldType getFieldType() {
@@ -33,7 +33,7 @@ public class Mp4TagBinaryField extends Mp4TagField {
      * @throws UnsupportedEncodingException */
     protected byte[] getDataBytes() throws Exception { return dataBytes; }
 
-    protected void build(Mp4Box head, JBBuffer raw) throws Exception {
+    protected void build(JBBuffer raw) throws Exception {
     	Mp4Box header = Mp4Box.init(raw, false);
         dataSize = header.getLength();
 

@@ -2,14 +2,12 @@ package outag.formats.mp4.util.tag;
 
 import outag.file_presentation.JBBuffer;
 import outag.formats.generic.TagField;
-import outag.formats.mp4.util.box.Mp4Box;
 
 /** Represents raw binary data <br>
  * We use this when we find an atom under the ilst atom that we do not recognize , that does not
  * follow standard conventions in order to save the data without modification so it can be safely
  * written back to file */
 public class Mp4TagRawBinaryField extends Mp4TagField {
-    protected int dataSize;
     protected byte[] dataBytes;
 
     /** Construct binary field from raw data of audio file
@@ -17,10 +15,8 @@ public class Mp4TagRawBinaryField extends Mp4TagField {
      * @param raw
      * @throws Exception 
      * @throws java.io.UnsupportedEncodingException */
-    public Mp4TagRawBinaryField(Mp4Box head, JBBuffer raw) throws Exception {
-        super(head, raw);
-        dataSize = head.getLength();
-//        build(header, raw);
+    public Mp4TagRawBinaryField(String id, JBBuffer raw) throws Exception {
+        super(id, raw);
     }
 
     public Mp4FieldType getFieldType() { return Mp4FieldType.IMPLICIT; }
@@ -33,9 +29,9 @@ public class Mp4TagRawBinaryField extends Mp4TagField {
     /** Build from data
      * <br>After returning buffers position will be after the end of this atom
      * @param raw */
-    protected void build(Mp4Box head, JBBuffer raw) {
+    protected void build(JBBuffer raw) {
         //Read the raw data into byte array
-        this.dataBytes = new byte[dataSize];
+        this.dataBytes = new byte[raw.limit()];
         for (int i = 0; i < dataBytes.length; i++)
             this.dataBytes[i] = raw.get();
     }
@@ -44,7 +40,7 @@ public class Mp4TagRawBinaryField extends Mp4TagField {
 
     public boolean isEmpty() { return this.dataBytes.length == 0; }
 
-    public int getDataSize() { return dataSize; }
+    public int getDataSize() { return dataBytes.length; }
 
     public byte[] getData() { return this.dataBytes; }
 

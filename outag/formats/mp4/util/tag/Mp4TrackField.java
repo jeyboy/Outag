@@ -15,67 +15,12 @@ public class Mp4TrackField extends Mp4TagTextNumberField {
     private static final int TRACK_NO_INDEX = 1;
     private static final int TRACK_TOTAL_INDEX = 2;
 
-//    /** Create new Track Field parsing the String for the trackno/total
-//     * @param trackValue
-//     * @throws Exception 
-//     * @throws org.jaudiotagger.tag.FieldDataInvalidException */
-//    public Mp4TrackField(String trackValue) throws Exception {
-//        super(Mp4FieldKey.TRACK.getFieldName(), trackValue);
-//
-//        numbers = new ArrayList<Short>();
-//        numbers.add(new Short("0"));
-//
-//        String values[] = trackValue.split("/");
-//        switch (values.length) {
-//            case 1:
-//                try { numbers.add(Short.parseShort(values[0])); }
-//                catch (NumberFormatException nfe) {
-//                    throw new Exception("Value of:" + values[0] + " is invalid for field:" + id);
-//                }
-//                numbers.add(new Short("0"));
-//                numbers.add(new Short("0"));
-//                break;
-//
-//            case 2:
-//                try { numbers.add(Short.parseShort(values[0])); }
-//                catch (NumberFormatException nfe) {
-//                    throw new Exception("Value of:" + values[0] + " is invalid for field:" + id);
-//                }
-//                try { numbers.add(Short.parseShort(values[1])); }
-//                catch (NumberFormatException nfe) {
-//                    throw new Exception("Value of:" + values[1] + " is invalid for field:" + id);
-//                }
-//                numbers.add(new Short("0"));
-//                break;
-//
-//            default:
-//                throw new Exception("Value is invalid for field:" + id);
-//        }
-//    }
-//
-//
-//    /** Create new Track Field with only track No
-//     * @param trackNo */
-//    public Mp4TrackField(int trackNo) {	this(trackNo, 0); }
-//
-//    /** Create new Track Field with track No and total tracks
-//     * @param trackNo
-//     * @param total */
-//    public Mp4TrackField(int trackNo, int total) {
-//        super(Mp4FieldKey.TRACK.getFieldName(), String.valueOf(trackNo));
-//        numbers = new ArrayList<Short>();
-//        numbers.add(new Short("0"));
-//        numbers.add((short) trackNo);
-//        numbers.add((short) total);
-//        numbers.add(new Short("0"));
-//    }
-
     /** Construct from file data
      * @param id
      * @param data
      * @throws Exception */
-    public Mp4TrackField(Mp4Box head, JBBuffer data) throws Exception {
-        super(head, data);
+    public Mp4TrackField(String id, JBBuffer data) throws Exception {
+        super(id, data);
     }
 
 

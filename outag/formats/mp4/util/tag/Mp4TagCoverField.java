@@ -16,8 +16,8 @@ public class Mp4TagCoverField extends Mp4TagBinaryField {
      * @param raw
      * @param imageType
      * @throws Exception */
-    public Mp4TagCoverField(Mp4Box head, JBBuffer raw) throws Exception {
-        super(head, raw);
+    public Mp4TagCoverField(String id, JBBuffer raw) throws Exception {
+        super(id, raw);
 //        this.imageType = imageType;
 //        if(!Mp4FieldType.isCoverArtType(imageType)) {
 //            logger.warning(ErrorMessage.MP4_IMAGE_FORMAT_IS_NOT_TO_EXPECTED_TYPE.getMsg(imageType));

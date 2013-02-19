@@ -33,20 +33,19 @@ public class Mp4TagTextField extends Mp4TagField implements TagTextField {
      * @param head   parent id
      * @param data atom data
      * @throws Exception */
-    public Mp4TagTextField(Mp4Box head, JBBuffer raw) throws Exception {
-        super(head, raw);
+    public Mp4TagTextField(String id, JBBuffer raw) throws Exception {
+        super(id, raw);
     }
 
     /** Construct new Field
      * @param id      parent id
      * @param content data atom data */
     public Mp4TagTextField(String id, String content) {
-        super(new Mp4Box(id));
+        super(id);
         this.content = content;
     }
 
-    protected void build(Mp4Box head, JBBuffer data) throws Exception {
-        //Data actually contains a 'Data' Box so process data using this
+    protected void build(JBBuffer data) throws Exception {
     	Mp4Box header = Mp4Box.init(data, false);
         Mp4DataBox databox = new Mp4DataBox(header, data);
         dataSize = header.getLength();

@@ -13,6 +13,8 @@ public class Mp4Box {
     
     public int getLength() { return length - getHeadLength(); }
     
+    public int getFullLength() { return length; }
+    
     public int getHeadLength() { return 8; }
     
     public String getEncoding() { return "CHARSET_UTF_8"; }

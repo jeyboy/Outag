@@ -53,7 +53,7 @@ public class Mp4DataBox {
     	else if (type == Mp4FieldType.IMPLICIT.getFileClassId()) {
         	data.pos(PRE_DATA_LENGTH);
         	content = "";
-            while(data.pos() < box.getLength())
+            while(data.pos() < box.getFullLength())
             	content += "/" + data.UShort();
 
             if (content.length() > 0) content.substring(1);

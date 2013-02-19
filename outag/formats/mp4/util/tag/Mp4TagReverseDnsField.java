@@ -41,31 +41,9 @@ public class Mp4TagReverseDnsField extends Mp4TagField implements TagTextField {
      * @param parentHeader
      * @param data
      * @throws Exception */
-    public Mp4TagReverseDnsField(Mp4Box head, JBBuffer data) throws Exception {
-        super(head, data);
+    public Mp4TagReverseDnsField(String id, JBBuffer data) throws Exception {
+        super(id, data);
     }
-
-//    /** Newly created Reverse Dns field
-//     * @param id
-//     * @param content */
-//    public Mp4TagReverseDnsField(Mp4FieldKey id, String content) {
-//        super(id.getFieldName());
-//        this.issuer = id.getIssuer();
-//        this.descriptor = id.getIdentifier();
-//        this.content = content;
-//    }
-//
-//    /** Newly created Reverse Dns field bypassing the Mp4TagField enum for creation of temporary reverse dns fields
-//     * @param fieldName
-//     * @param issuer
-//     * @param identifier
-//     * @param content */
-//    public Mp4TagReverseDnsField(final String fieldName, final String issuer, final String identifier, final String content) {
-//        super(fieldName);
-//        this.issuer     = issuer;
-//        this.descriptor = identifier;
-//        this.content    = content;
-//    }
 
     public Mp4FieldType getFieldType() {
         //TODO always assuming text at moment but may not always be the case (though dont have any concrete
@@ -73,7 +51,7 @@ public class Mp4TagReverseDnsField extends Mp4TagField implements TagTextField {
         return Mp4FieldType.TEXT;
     }
 
-    protected void build(Mp4Box head, JBBuffer data) throws Exception {
+    protected void build(JBBuffer data) throws Exception {
         //Read mean box, set the issuer and skip over data
     	Mp4Box meanHeader = Mp4Box.init(data, false);
         Mp4MeanBox meanBox = new Mp4MeanBox(meanHeader, data);
