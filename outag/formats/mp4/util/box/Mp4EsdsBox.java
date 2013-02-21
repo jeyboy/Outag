@@ -8,7 +8,7 @@ import outag.file_presentation.JBBuffer;
 
 /** EsdsBox ( stream specific description box), usually holds the Bitrate/No of Channels<br>
  * It contains a number of  (possibly optional?)  sections (section 3 - 6) (containing optional filler) with
- * differeent info in each section. <br>
+ * different info in each section. <br>
  * -> 4 bytes version/flags = 8-bit hex version + 24-bit hex flags
  * (current = 0)
  * <p/>
@@ -140,7 +140,7 @@ public class Mp4EsdsBox {
             this.avgBitrate = data.UInt();
         }
         
-        //Process Section 5,(to getFields no of channels and audioprofile(profile in itunes))
+        //Process Section 5,(to getFields no of channels and audio profile(profile in itunes))
         if (data.read() == SECTION_FIVE) {
             sectionFiveLength = processSectionHeader(data);
 
@@ -148,7 +148,7 @@ public class Mp4EsdsBox {
             audioProfile = audioProfileMap.get(data.read() >> 3);
 
             //Channels
-            numberOfChannels = (data.read() << 1) >> 4;
+            numberOfChannels = data.UByte() >> 3;
         }
 
         //Process Section 6, not needed ...

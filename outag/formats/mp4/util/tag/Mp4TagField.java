@@ -16,21 +16,41 @@ public abstract class Mp4TagField implements TagField {
     public static void parse(Mp4Tag tag, Mp4Box head, JBBuffer raw) throws Exception {
     	JBBuffer buffer = raw.slice(head.getLength());
     	switch(head.getId()) {
-    		case "ART": tag.addArtist(new Mp4TagTextField(head.getId(), buffer).getContent());
+    		case "Â©ART":
+    		case "©ART":
+    		case "aART": tag.addArtist(new Mp4TagTextField(head.getId(), buffer).getContent());
     			break;
+    			
+    		case "Â©alb":
+    		case "©alb":
     		case "alb":	tag.addAlbum(new Mp4TagTextField(head.getId(), buffer).getContent());
     			break;
-    		case "nam":	tag.addTitle(new Mp4TagTextField(head.getId(), buffer).getContent());
+    			
+    		case "nam":
+    		case "©nam":
+    		case "Â©nam":	tag.addTitle(new Mp4TagTextField(head.getId(), buffer).getContent());
     			break;
+    			
     		case "trkn": tag.addTrack(new Mp4TrackField(head.getId(), buffer).getContent());
     			break;
-    		case "day":	tag.addYear(new Mp4TagTextField(head.getId(), buffer).getContent());
+    			
+    		case "day":
+    		case "©day":
+    		case "Â©day":	tag.addYear(new Mp4TagTextField(head.getId(), buffer).getContent());
     			break;
-    		case "cmt":	tag.addComment(new Mp4TagTextField(head.getId(), buffer).getContent());
+    			
+    		case "cmt" :
+    		case "©cmt" :
+    		case "Â©cmt":	tag.addComment(new Mp4TagTextField(head.getId(), buffer).getContent());
     			break;
+    			
+    		case "Â©gen":
+    		case "©gen":
     		case "gnre": tag.addGenre(new Mp4GenreField(head.getId(), buffer).getContent());
     			break;
+    			
     		case Mp4TagReverseDnsField.IDENTIFIER: break;
+    		
     		default:   			
     			try {
     				Mp4Box header = Mp4Box.init(buffer, false);

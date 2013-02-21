@@ -15,7 +15,7 @@ public class Mp4Box {
     
     public int getHeadLength() { return 8; }
     
-    public String getEncoding() { return "CHARSET_UTF_8"; }
+    public String getEncoding() { return "UTF-8"; }
 
     public void init(Parseable f) throws Exception {
     	length = f.UInt();

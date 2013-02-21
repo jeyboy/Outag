@@ -18,10 +18,14 @@ public class Mp4GenreField extends Mp4TagTextNumberField {
         Mp4DataBox databox = new Mp4DataBox(header, data);
         dataSize = header.getLength();
         numbers = databox.getNumbers();
+        content = databox.getContent();
 
-        int genreId = numbers.get(0);
-        //Get value, we have to adjust index by one because iTunes labels from one instead of zero
-        content = GenreTypes.getNameByCode(genreId - 1);
+        if (numbers != null) {
+	        int genreId = numbers.get(0) - 1;
+	        //Get value, we have to adjust index by one because iTunes labels from one instead of zero
+	        if (genreId <= GenreTypes.getMaxGenreId())
+	        	content = GenreTypes.getNameByCode(genreId);
+        }
 
         //Some apps set genre to invalid value, we don't disguise this by setting content to empty string we leave
         //as null so apps can handle if they wish, but we do display a warning to make them aware.

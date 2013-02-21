@@ -7,6 +7,7 @@ import java.util.HashMap;
 public enum Mp4FieldType {
     IMPLICIT(0x0),  //used for specialized formats such as TrackNo or DiscNo
     TEXT(0x1),      //UTF-8
+    TEXT2(256),      //UTF-8
     TEXT_UTF16BE(0x02),
     TEXT_JAPANESE(0x03),
     HTML(0x06),
@@ -24,7 +25,8 @@ public enum Mp4FieldType {
     INTEGER(0x15), //Formally known as byte
     RIAAPA(0x18),
     UPC(0x19),
-    COVERART_BMP(0x1B);
+    COVERART_BMP(0x1B),
+    COVERART_JFIF(3328);
 
     int fileClassId;
 

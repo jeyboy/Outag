@@ -46,7 +46,7 @@ public class Mp4DataBox {
     	JBBuffer data = dataBuffer.slice();
         type = data.move(Mp4DataBox.TYPE_POS).UInt();
         
-    	if (type == Mp4FieldType.TEXT.getFileClassId()) 
+    	if (type == Mp4FieldType.TEXT.getFileClassId() || type == Mp4FieldType.TEXT2.getFileClassId() || type > 255) 
     		content = data.move(PRE_DATA_LENGTH).Str(box.getLength() - PRE_DATA_LENGTH, box.getEncoding());
     	else if (type == Mp4FieldType.IMPLICIT.getFileClassId()) {
         	data.pos(PRE_DATA_LENGTH);
@@ -82,12 +82,12 @@ public class Mp4DataBox {
 //                bytedata = new byte[box.getLength() - PRE_DATA_LENGTH];
 //                data.move(PRE_DATA_LENGTH).get(bytedata);                
     	}
-    	else if (type == Mp4FieldType.COVERART_JPEG.getFileClassId()) {
+    	else if (type == Mp4FieldType.COVERART_JPEG.getFileClassId() || type == Mp4FieldType.COVERART_JFIF.getFileClassId()) {
     		content = data.move(PRE_DATA_LENGTH)
     			.Str(box.getLength() - PRE_DATA_LENGTH, box.getEncoding());        		
     	}
-    	else if (type == 256) //possible it mark null value
-    		content = "";
+    	
+    	if (content == null) content = "";
     }
 
     public String getContent() { return content; }

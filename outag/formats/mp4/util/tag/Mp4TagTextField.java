@@ -69,7 +69,7 @@ public class Mp4TagTextField extends Mp4TagField implements TagTextField {
 
     public boolean isBinary() { return false; }
 
-    public boolean isEmpty() { return this.content.trim().equals(""); }
+    public boolean isEmpty() { return content == null || content.trim().length() == 0; }
 
     public void setContent(String s) { this.content = s; }
 
