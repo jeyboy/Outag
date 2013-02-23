@@ -15,30 +15,46 @@ public abstract class Parseable {
 		return ret;
 	}
 	
+	public static int getBit(int val, int pos) { return (val >> pos) & 1; }
+	
+	public static int calcByBits(int val, int first_bit, int len) {
+		int res = 0;
+		
+		for(int loop1 = 0; loop1 < len; loop1++)
+//			res |= getBit(val, first_bit + loop1) << (len - loop1 - 1);
+			res |= getBit(val, first_bit + loop1) << loop1;
+		
+		return res;
+	}	
+	
+	public static int toU(int u) 				{ return u & 0xFF; }
+	
 	public byte Byte() throws IOException 		{ return (byte)read(); }
 	
-	public int UByte() throws IOException 		{ return read() & 0xFF; }
+	public byte UByte() throws IOException 		{ return (byte)UIByte(); }
+	
+	public int UIByte() throws IOException 		{ return toU(read()); }
 	
 	
-	public int UBEShort() throws IOException 	{ return UByte() + (UByte() << 8); }
+	public int UBEShort() throws IOException 	{ return UIByte() + (UIByte() << 8); }
 	
 	public int UBEInt() throws IOException 		{ return (UBEShort() << 32) + (UBEShort() << 16); }
 		
 	public long UBELong() throws IOException 	{ return (UBEInt() << 64) + (UBEInt() << 32); }	
 	
 	
-	public short USShort() throws IOException 	{ return (short)((UByte() << 8) + UByte()); }
+	public short UShort() throws IOException 	{ return (short)UIShort(); }
 	
-	public int UShort() throws IOException 		{ return (UByte() << 8) + UByte(); }
+	public int UIShort() throws IOException 	{ return (UIByte() << 8) + UIByte(); }
 	
-	public int UInt() throws IOException 		{ return (UShort() << 16) + (UShort() << 32); }
+	public int UInt() throws IOException 		{ return (UIShort() << 16) + (UIShort() << 32); }
 	
-	public long LUInt() throws IOException 		{ return UInt(); }
+	public long ULInt() throws IOException 		{ return UInt(); }
 	
-	public long ULong() throws IOException 		{ return (LUInt() << 32) + (LUInt() << 64); }	
+	public long ULong() throws IOException 		{ return (ULInt() << 32) + (ULInt() << 64); }
 	
+		
 	
-
 	public String Str(int length, String encoding) throws IOException {
 		byte[] b = new byte[length]; 	read(b);
 		if(encoding.length() == 0)

@@ -1,18 +1,18 @@
-package outag.formats.wav;
+package outag.formats.wv;
 
 import outag.formats.EncodingInfo;
 import outag.formats.Tag;
 import outag.formats.exceptions.CannotReadException;
 import outag.formats.generic.AudioFileReader;
 import outag.formats.generic.GenericTag;
-import outag.formats.wav.util.WavInfoReader;
+import outag.formats.wv.util.WvInfoReader;
 
 import java.io.*;
 
-public class WavFileReader extends AudioFileReader {
-	private WavInfoReader ir = new WavInfoReader();
+public class WvFileReader extends AudioFileReader {
+	private WvInfoReader ir = new WvInfoReader();
 	
-	protected EncodingInfo getEncodingInfo(RandomAccessFile raf) throws CannotReadException, IOException {
+	protected EncodingInfo getEncodingInfo(RandomAccessFile raf) throws Exception {
 		return ir.read(raf);
 	}
 	

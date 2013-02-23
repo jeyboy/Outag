@@ -15,6 +15,7 @@ import outag.formats.mpc.MpcFileReader;
 import outag.formats.ogg.OggFileReader;
 import outag.formats.real.RealFileReader;
 import outag.formats.wav.WavFileReader;
+import outag.formats.wv.WvFileReader;
 
 /** <p>Example of use:</p>
  * <p>
@@ -80,6 +81,7 @@ public class AudioFileIO {
 				case "flac": readers.put(ext, (reader = new FlacFileReader()));	break; 
 				case "ape": readers.put(ext, (reader = new MonkeyFileReader()));	break;
 				case "wav": readers.put(ext, (reader = new WavFileReader()));	break;
+				case "wv": readers.put(ext, (reader = new WvFileReader()));	break;
 				case "wma": readers.put(ext, (reader = new AsfFileReader()));	break;
 				case "mpc": //not tested
 				case "mp+": //not tested

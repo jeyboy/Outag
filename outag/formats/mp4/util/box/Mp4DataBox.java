@@ -54,7 +54,7 @@ public class Mp4DataBox {
         	numbers = new ArrayList<Short>();
         	
             while(data.pos() < box.getLength()) {
-            	short temp = data.USShort();
+            	short temp = data.UShort();
             	content += "/" + temp;
             	numbers.add(temp);
             }
@@ -76,7 +76,7 @@ public class Mp4DataBox {
         	numbers = new ArrayList<Short>();
         	
             while(data.pos() < box.getLength())
-            	numbers.add((short)data.UShort());
+            	numbers.add(data.UShort());
             
 //                //But store data for safer writing back to file
 //                bytedata = new byte[box.getLength() - PRE_DATA_LENGTH];

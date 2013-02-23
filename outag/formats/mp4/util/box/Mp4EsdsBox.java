@@ -148,7 +148,7 @@ public class Mp4EsdsBox {
             audioProfile = audioProfileMap.get(data.read() >> 3);
 
             //Channels
-            numberOfChannels = data.UByte() >> 3;
+            numberOfChannels = data.UIByte() >> 3;
         }
 
         //Process Section 6, not needed ...
@@ -159,7 +159,7 @@ public class Mp4EsdsBox {
      * @return section header
      * @throws IOException */
     public int processSectionHeader(JBBuffer buffer) throws IOException {
-        int nextByte = buffer.UByte();
+        int nextByte = buffer.UIByte();
         if (nextByte == FILLER_START || nextByte == FILLER_OTHER || nextByte == FILLER_END) {
         	buffer.skip(2);
             return buffer.read();

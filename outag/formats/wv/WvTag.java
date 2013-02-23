@@ -1,7 +1,7 @@
-package outag.formats.wav;
+package outag.formats.wv;
 
 import outag.formats.generic.GenericTag;
 
-public class WavTag extends GenericTag {
+public class WvTag extends GenericTag {
 	public String toString() { return "WAV " + super.toString(); }
 }
