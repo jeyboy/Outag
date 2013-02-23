@@ -31,17 +31,17 @@ public class HeadChunk {
 		if (!p.Str(4).equals("wvpk"))
 			throw new Exception("Wrong file format");
 		
-		blockLength = 8 + p.UBEInt();
-		version = p.UBEShort();
+		blockLength = 8 + p.UInt();
+		version = p.UShort();
 		trackNumber = p.UByte();
 		trackSubIndex = p.UByte();
-		totalSamples = p.UBEInt();
+		totalSamples = p.UInt();
 		
-		samplesOffsetFroCurrentBlock = p.UBEInt();
-		totalSamplesInThisBlock = p.UBEInt();
+		samplesOffsetFroCurrentBlock = p.UInt();
+		totalSamplesInThisBlock = p.UInt();
 		
 		flags = new HeadFlags(p);
-		crc = p.UBEInt();
+		crc = p.UInt();
 	}
 	
 	public float getDuration() {

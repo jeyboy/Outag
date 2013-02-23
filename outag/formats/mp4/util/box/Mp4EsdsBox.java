@@ -136,8 +136,8 @@ public class Mp4EsdsBox {
             data.skip(STREAM_TYPE_LENGTH + BUFFER_SIZE_LENGTH);
 
             //Bit rates
-            this.maxBitrate = data.UInt(); 
-            this.avgBitrate = data.UInt();
+            this.maxBitrate = data.UBEInt(); 
+            this.avgBitrate = data.UBEInt();
         }
         
         //Process Section 5,(to getFields no of channels and audio profile(profile in itunes))

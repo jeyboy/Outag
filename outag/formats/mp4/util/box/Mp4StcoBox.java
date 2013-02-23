@@ -21,10 +21,10 @@ public class Mp4StcoBox {
         data.skip(VERSION_FLAG_LENGTH + OTHER_FLAG_LENGTH);
 
         //No of offsets
-        noOfOffSets = data.UInt();
+        noOfOffSets = data.UBEInt();
 
         //First Offset, useful for sanity checks
-        firstOffSet = data.UInt();
+        firstOffSet = data.UBEInt();
     }
 
 //    public void printTotalOffset()

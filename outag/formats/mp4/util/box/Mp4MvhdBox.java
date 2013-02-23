@@ -14,13 +14,13 @@ public class Mp4MvhdBox {
         
         if(version == 1) {
         	data.skip(19);
-            timeScale = data.UInt();
-            timeLength = data.ULong();
+            timeScale = data.UBEInt();
+            timeLength = data.UBELong();
         } 
         else {
         	data.skip(11);
-            timeScale = data.UInt();
-            timeLength = data.UInt();
+            timeScale = data.UBEInt();
+            timeLength = data.UBEInt();
         }
     }
     

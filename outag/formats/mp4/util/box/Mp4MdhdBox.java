@@ -38,12 +38,12 @@ public class Mp4MdhdBox {
 
         if (version == LONG_FORMAT) {
         	data.pos(TIMESCALE_LONG_POS);
-            samplingRate = data.UInt();
-            timeLength = data.ULong();
+            samplingRate = data.UBEInt();
+            timeLength = data.UBELong();
         } else {
         	data.pos(TIMESCALE_SHORT_POS);
-            samplingRate = data.UInt();
-            timeLength = data.UInt();
+            samplingRate = data.UBEInt();
+            timeLength = data.UBEInt();
         }
     }
 

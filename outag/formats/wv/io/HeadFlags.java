@@ -48,7 +48,7 @@ public class HeadFlags {
 	
 	
 	public HeadFlags(Parseable p) throws IOException {
-		flags = p.UBEInt();
+		flags = p.UInt();
 		
 		bitsPerSample = ((Parseable.getBit(flags, 0) * 2) + Parseable.getBit(flags, 1)) + 1;
 		isStereo = Parseable.getBit(flags, 2) == 0;

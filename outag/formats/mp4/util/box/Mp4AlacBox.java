@@ -26,17 +26,17 @@ public class Mp4AlacBox {
      * @throws IOException */
     public Mp4AlacBox(Parseable data) throws IOException {   	
     	data.skip(4); // skip other flags (4 bytes)
-    	maxSamplePerFrame   = data.UInt();
+    	maxSamplePerFrame   = data.UBEInt();
     	unknown1            = data.read();
     	sampleSize          = data.read();
     	historyMult         = data.read();
     	initialHistory      = data.read();
     	kModifier           = data.read();
     	channels            = data.read();
-    	unknown2            = data.UShort();
-    	maxCodedFrameSize   = data.UInt();
-    	bitRate             = data.UInt();
-    	sampleRate          = data.UInt();    	
+    	unknown2            = data.UBEShort();
+    	maxCodedFrameSize   = data.UBEInt();
+    	bitRate             = data.UBEInt();
+    	sampleRate          = data.UBEInt();    	
     }
 
     public int getMaxSamplePerFrame() { return maxSamplePerFrame; }

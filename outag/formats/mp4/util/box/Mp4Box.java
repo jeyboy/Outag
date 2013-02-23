@@ -18,7 +18,7 @@ public class Mp4Box {
     public String getEncoding() { return "UTF-8"; }
 
     public void init(Parseable f) throws Exception {
-    	length = f.UInt();
+    	length = f.UBEInt();
         id = f.Str(4);
         if (length == 1) { // means what uses extra size fields because block size bigger than 2^32
         	throw new Exception("Long block size unsupported");

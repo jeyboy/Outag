@@ -44,7 +44,7 @@ public class Mp4DataBox {
     public Mp4DataBox(Mp4Box box, JBBuffer dataBuffer) throws IOException {
         //Type
     	JBBuffer data = dataBuffer.slice();
-        type = data.move(Mp4DataBox.TYPE_POS).UInt();
+        type = data.move(Mp4DataBox.TYPE_POS).UBEInt();
         
     	if (type == Mp4FieldType.TEXT.getFileClassId() || type == Mp4FieldType.TEXT2.getFileClassId())// || type > 255) 
     		content = data.move(PRE_DATA_LENGTH).Str(box.getLength() - PRE_DATA_LENGTH, box.getEncoding());
@@ -54,7 +54,7 @@ public class Mp4DataBox {
         	numbers = new ArrayList<Short>();
         	
             while(data.pos() < box.getLength()) {
-            	short temp = data.UShort();
+            	short temp = data.UBEShort();
             	content += "/" + temp;
             	numbers.add(temp);
             }
@@ -65,7 +65,7 @@ public class Mp4DataBox {
             //TODO byte data length seems to be 1 for pgap and cpil but 2 for tmpo ?
             //Create String representation for display
     		data.pos(PRE_DATA_LENGTH);
-    		content = data.UInt() + "";
+    		content = data.UBEInt() + "";
     		
 //                content = Utils.getIntBE(this.dataBuffer, PRE_DATA_LENGTH, header.getDataLength() - 1) + "";
 
@@ -76,7 +76,7 @@ public class Mp4DataBox {
         	numbers = new ArrayList<Short>();
         	
             while(data.pos() < box.getLength())
-            	numbers.add(data.UShort());
+            	numbers.add(data.UBEShort());
             
 //                //But store data for safer writing back to file
 //                bytedata = new byte[box.getLength() - PRE_DATA_LENGTH];
