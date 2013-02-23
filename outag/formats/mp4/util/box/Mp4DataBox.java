@@ -46,7 +46,7 @@ public class Mp4DataBox {
     	JBBuffer data = dataBuffer.slice();
         type = data.move(Mp4DataBox.TYPE_POS).UInt();
         
-    	if (type == Mp4FieldType.TEXT.getFileClassId() || type == Mp4FieldType.TEXT2.getFileClassId() || type > 255) 
+    	if (type == Mp4FieldType.TEXT.getFileClassId() || type == Mp4FieldType.TEXT2.getFileClassId())// || type > 255) 
     		content = data.move(PRE_DATA_LENGTH).Str(box.getLength() - PRE_DATA_LENGTH, box.getEncoding());
     	else if (type == Mp4FieldType.IMPLICIT.getFileClassId()) {
         	data.pos(PRE_DATA_LENGTH);
