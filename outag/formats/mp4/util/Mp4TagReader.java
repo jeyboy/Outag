@@ -50,7 +50,7 @@ public class Mp4TagReader {
         JBFile file = new JBFile(raf);
         
         box.find(file, true, Mp4BoxIdentifier.MOOV.getName());       
-        JBBuffer moovBuffer = file.Buffer(box.getLength());		
+        JBBuffer moovBuffer = file.buffer(box.getLength());		
 		       
         if (box.find(moovBuffer, false, Mp4BoxIdentifier.UDTA.getName(), Mp4BoxIdentifier.META.getName())) {
         	switch(box.getId()) {

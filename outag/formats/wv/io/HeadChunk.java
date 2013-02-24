@@ -17,7 +17,7 @@ import outag.file_presentation.Parseable;
 
 public class HeadChunk {
 	int blockLength;
-	int version;
+	public String version;
 	byte trackNumber;
 	byte trackSubIndex;
 	int totalSamples; //only valid if block_index == 0 and a value of -1 indicates unknown length
@@ -32,7 +32,7 @@ public class HeadChunk {
 			throw new Exception("Wrong file format");
 		
 		blockLength = 8 + p.UInt();
-		version = p.UShort();
+		version = Integer.toHexString(p.UShort());
 		trackNumber = p.UByte();
 		trackSubIndex = p.UByte();
 		totalSamples = p.UInt();
@@ -50,10 +50,10 @@ public class HeadChunk {
 			: 0f);
 	}
 	
-	/** @param stream_length - actual stream size without tags length */
-	public int getAudioBitrate(int stream_length) {
-		return (int) (getDuration() > 0 ?
-			((stream_length * 8L) /
-			getDuration()) / 1000 : 0);
+	/** @param streamLength - actual stream size without tags length */
+	public int getAudioBitrate(int streamLength) {
+		float duration = getDuration();
+		return (int) (duration > 0 ?
+			((streamLength * 8L) / duration) / 1000 : 0);
 	}		
 }

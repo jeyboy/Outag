@@ -11,6 +11,8 @@ public class JBBuffer extends Parseable {
 	public JBBuffer(ByteBuffer buf) { base = buf; }
 
 	public JBBuffer(int length) { base = ByteBuffer.allocate(length); }
+	
+	public JBBuffer buffer(int length) { return this.slice(length); }
 
 	public byte get() { return base.get();	}
 	
@@ -35,6 +37,8 @@ public class JBBuffer extends Parseable {
 	public int ipos() { return base.position(); }
 	
 	public long available() { return base.capacity() - base.position(); }
+	
+	public long length() { return base.capacity(); }
 	
 	public JBBuffer slice() { return new JBBuffer(base.slice()); }
 	

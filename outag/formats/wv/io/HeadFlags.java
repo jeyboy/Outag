@@ -31,14 +31,15 @@ import outag.reference.SampleRates;
 //bit 31:     // reserved (decoders should refuse to decode if set)
 
 public class HeadFlags {
-	private int  SHIFT_LSB   = 13;
-	private long SHIFT_MASK  = (0x1fL << SHIFT_LSB);
-	private int  SRATE_LSB   = 23;
-	private long SRATE_MASK  = (0xfL << SRATE_LSB);	
+//	private int  SHIFT_LSB   = 13;
+//	private long SHIFT_MASK  = (0x1fL << SHIFT_LSB);
+//	private int  SRATE_LSB   = 23;
+//	private long SRATE_MASK  = (0xfL << SRATE_LSB);	
 	
 	
 	int flags;
 	int sampleRateIndex;
+	int dataAmount;
 	public int bitsPerSample;
 	public boolean isStereo;
 	public boolean isLossless;
@@ -55,8 +56,9 @@ public class HeadFlags {
 		isLossless = Parseable.getBit(flags, 3) == 0;
 		isJoinStereo = Parseable.getBit(flags, 4) == 1;
 		isIndependentChannels = Parseable.getBit(flags, 5) == 0;
+		dataAmount = Parseable.calcByBits(flags, 13, 4);
 	
-		sampleRateIndex = ((int)(flags & SRATE_MASK) >> SRATE_LSB); //Parseable.calcByBits(flags, 23, 4);		
+		sampleRateIndex = Parseable.calcByBits(flags, 23, 4);		
 		isPseudoStereo = Parseable.getBit(flags, 30) == 1;
 	}
 	
@@ -65,7 +67,7 @@ public class HeadFlags {
 	}
 	
 	public int getBitsPerSample() {
-		return (int) (((flags & 3) + 1) * 8 -
-			((flags & SHIFT_MASK) >> SHIFT_LSB));
+		return (int) (((flags & 3) + 1) * 8 - dataAmount);
+//			((flags & SHIFT_MASK) >> SHIFT_LSB));
 	}
 }

@@ -12,7 +12,7 @@ public class JBFile extends Parseable  {
 	public JBFile(File file) throws FileNotFoundException { base = new RandomAccessFile(file, "r"); }
 	public JBFile(RandomAccessFile file) { base = file; }
 	
-	public JBBuffer Buffer(int length) throws IOException {
+	public JBBuffer buffer(int length) throws IOException {
 		byte [] buffer = new byte[length];
 		base.readFully(buffer);
 		return new JBBuffer(buffer); 
@@ -27,4 +27,6 @@ public class JBFile extends Parseable  {
 	public long available() throws IOException { return base.length() - base.getFilePointer(); }
 	
 	public long pos() throws IOException { return base.getFilePointer(); }
+	
+	public long length() throws IOException { return base.length(); }
 }

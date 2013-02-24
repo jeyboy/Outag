@@ -70,14 +70,14 @@ public class Mp4InfoReader {
 
         box.find(file, true, Mp4BoxIdentifier.FTYP.getName());
 
-        Mp4FtypBox ftyp = new Mp4FtypBox(file.Buffer(box.getLength()));
+        Mp4FtypBox ftyp = new Mp4FtypBox(file.buffer(box.getLength()));
         info.setEncodingType(ftyp.getMajorBrand());
 
         //Get to the facts everything we are interested in is within the moov box, so just load data from file
         //once so no more file I/O needed        
         box.find(file, true, Mp4BoxIdentifier.MOOV.getName());       
 
-        JBBuffer moovBuffer = file.Buffer(box.getLength());
+        JBBuffer moovBuffer = file.buffer(box.getLength());
 
         //Level 2-Searching for "mvhd" somewhere within "moov", we make a slice after finding header
         //so all get() methods will be relative to mvdh positions
