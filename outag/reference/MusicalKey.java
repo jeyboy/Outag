@@ -3,11 +3,8 @@ package outag.reference;
 import java.util.EnumSet;
 import java.util.HashMap;
 
-/**
- * Musical key used by the Key tagFieldKey
- *
- * It is not enforced but can be used to verify the Musical key according to the ID3 specification of the TKEY field
- */
+/** Musical key used by the Key tagFieldKey
+  * It is not enforced but can be used to verify the Musical key according to the ID3 specification of the TKEY field */
 public enum MusicalKey
 {
     NOTE_A("A"),

@@ -1,8 +1,9 @@
 package outag.formats.mp4.util;
 
 import java.io.RandomAccessFile;
-import outag.file_presentation.JBBuffer;
-import outag.file_presentation.JBFile;
+
+import jtag.io.JBBuffer;
+import jtag.io.JBFile;
 import outag.formats.Tag;
 import outag.formats.mp4.Mp4Tag;
 import outag.formats.mp4.util.box.Mp4Box;

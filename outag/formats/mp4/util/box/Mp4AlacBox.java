@@ -2,7 +2,7 @@ package outag.formats.mp4.util.box;
 
 import java.io.IOException;
 
-import outag.file_presentation.Parseable;
+import jtag.io.Parseable;
 
 /** AlacBox ( Apple Lossless codec information description box), <br>
   * Normally occurs twice, the first ALAC contains the default  values, the second ALAC within contains the real

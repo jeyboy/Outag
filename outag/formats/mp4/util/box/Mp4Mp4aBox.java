@@ -1,6 +1,6 @@
 package outag.formats.mp4.util.box;
 
-import outag.file_presentation.JBBuffer;
+import jtag.io.JBBuffer;
 
 /** Mp4aBox ( sample (frame encoding) description box) <br>
  * At first glance appears to hold no of channels but actually always returns 2 even for mono recordings

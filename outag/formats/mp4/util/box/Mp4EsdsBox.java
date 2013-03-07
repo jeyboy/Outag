@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import outag.file_presentation.JBBuffer;
+import jtag.io.JBBuffer;
 
 /** EsdsBox ( stream specific description box), usually holds the Bitrate/No of Channels<br>
  * It contains a number of  (possibly optional?)  sections (section 3 - 6) (containing optional filler) with

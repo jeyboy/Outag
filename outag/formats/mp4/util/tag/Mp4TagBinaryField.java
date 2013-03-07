@@ -2,7 +2,7 @@ package outag.formats.mp4.util.tag;
 
 import java.io.UnsupportedEncodingException;
 
-import outag.file_presentation.JBBuffer;
+import jtag.io.JBBuffer;
 import outag.formats.generic.TagField;
 import outag.formats.mp4.util.box.Mp4Box;
 

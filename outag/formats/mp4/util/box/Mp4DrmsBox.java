@@ -1,6 +1,6 @@
 package outag.formats.mp4.util.box;
 
-import outag.file_presentation.JBBuffer;
+import jtag.io.JBBuffer;
 
 /** DrmsBox Replaces mp4a box on drm files <br>
  * Need to skip over data in order to find esds atom <br>

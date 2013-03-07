@@ -1,7 +1,8 @@
 package outag.formats.mp4.util.box;
 
 import java.io.IOException;
-import outag.file_presentation.JBBuffer;
+
+import jtag.io.JBBuffer;
 
 /** StcoBox ( media (stream) header), holds offsets into the Audio data */
 public class Mp4StcoBox {

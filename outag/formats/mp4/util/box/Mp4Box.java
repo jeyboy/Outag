@@ -1,6 +1,6 @@
 package outag.formats.mp4.util.box;
 
-import outag.file_presentation.Parseable;
+import jtag.io.Parseable;
 
 public class Mp4Box {
     private String id;

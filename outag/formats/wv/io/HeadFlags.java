@@ -2,7 +2,7 @@ package outag.formats.wv.io;
 
 import java.io.IOException;
 
-import outag.file_presentation.Parseable;
+import jtag.io.Parseable;
 import outag.reference.SampleRates;
 
 //bits 1,0:   // 00 = 1 byte / sample (1-8 bits / sample)

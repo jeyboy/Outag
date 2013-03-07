@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import outag.file_presentation.JBBuffer;
+import jtag.io.JBBuffer;
 
 /** Ftyp (File Type) is the first atom, can be used to help identify the mp4 container type */
 public class Mp4FtypBox {

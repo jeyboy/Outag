@@ -2,7 +2,7 @@ package outag.formats.mp4.util.box;
 
 import java.io.IOException;
 
-import outag.file_presentation.JBBuffer;
+import jtag.io.JBBuffer;
 
 /** MdhdBox ( media (stream) header), holds the Sampling Rate used. */
 public class Mp4MdhdBox {

@@ -1,8 +1,8 @@
 package outag.formats.wv.io;
 
-import headers.RIFF;
+import jtag.formats.wav.RIFF;
 
-import outag.file_presentation.Parseable;
+import jtag.io.Parseable;
 
 
 //METADATA TAGS
@@ -95,10 +95,13 @@ public class Metadata {
 		short b = p.UByte();
 		int size;
 		
+//		byte [] g = p.Array(3000);
+//		t = new String(g);
+		
 		if (b == LARGE_DATA_SIZE)
-			size = p.UInt();
+			size = p.UInt() * 2;
 		else
-			size = p.UIByte();
+			size = p.UIByte() * 2;
 				
 		switch(b) {
 			case DECORR_TERMS:
@@ -122,7 +125,7 @@ public class Metadata {
 				break;
 		
 			case RIFF_HEADER:
-				riffHeader = new RIFF(p);				
+				riffHeader = new RIFF(p);
 				break;
 				
 			

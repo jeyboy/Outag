@@ -3,7 +3,7 @@ package outag.formats.mp4.util.box;
 import java.io.IOException;
 import java.util.HashMap;
 
-import outag.file_presentation.JBBuffer;
+import jtag.io.JBBuffer;
 
 /** HdlrBox ( Handler box), <br>
  * Describes the type of metadata in the following list or minf atom */

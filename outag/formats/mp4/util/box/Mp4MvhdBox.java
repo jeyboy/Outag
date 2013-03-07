@@ -2,7 +2,7 @@ package outag.formats.mp4.util.box;
 
 import java.io.IOException;
 
-import outag.file_presentation.JBBuffer;
+import jtag.io.JBBuffer;
 
 public class Mp4MvhdBox {
     private int timeScale;

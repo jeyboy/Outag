@@ -1,6 +1,6 @@
 package outag.formats.mp4.util.box;
 
-import outag.file_presentation.JBBuffer;
+import jtag.io.JBBuffer;
 
 /** This box is used within ---- boxes to hold the issuer */
 public class Mp4MeanBox {

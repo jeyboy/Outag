@@ -2,7 +2,7 @@ package outag.formats.mp4.util.box;
 
 import java.io.IOException;
 
-import outag.file_presentation.JBBuffer;
+import jtag.io.JBBuffer;
 import outag.formats.exceptions.CannotReadException;
 
 /** This MP4 MetaBox is the parent of meta data, it usually contains four bytes of data

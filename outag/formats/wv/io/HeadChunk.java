@@ -2,7 +2,7 @@ package outag.formats.wv.io;
 
 import java.io.IOException;
 
-import outag.file_presentation.Parseable;
+import jtag.io.Parseable;
 
 //4 bytes - 'wvpk'
 //32 bits - total block size (not counting this field or 'wvpk')

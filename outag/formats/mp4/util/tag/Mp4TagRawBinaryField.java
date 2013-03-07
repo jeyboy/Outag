@@ -1,6 +1,6 @@
 package outag.formats.mp4.util.tag;
 
-import outag.file_presentation.JBBuffer;
+import jtag.io.JBBuffer;
 import outag.formats.generic.TagField;
 
 /** Represents raw binary data <br>

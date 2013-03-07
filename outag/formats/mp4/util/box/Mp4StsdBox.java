@@ -1,6 +1,6 @@
 package outag.formats.mp4.util.box;
 
-import outag.file_presentation.JBBuffer;
+import jtag.io.JBBuffer;
 
 /** StsdBox (sample (frame encoding) description box) <br>
  * 4 bytes version/flags = byte hex version + 24-bit hex flags (current = 0)

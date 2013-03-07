@@ -3,7 +3,8 @@ package outag.formats.mp4.util.box;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import outag.file_presentation.JBBuffer;
+
+import jtag.io.JBBuffer;
 import outag.formats.mp4.util.tag.Mp4FieldType;
 
 /** This box is used within both normal metadata boxes and ---- boxes to hold the actual data. <br>
