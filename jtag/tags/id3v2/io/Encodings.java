@@ -1,11 +1,13 @@
 package jtag.tags.id3v2.io;
 
 public class Encodings {
+	public static char nil = '\0';
+	
 	static EncodeInfo [] encodings = { 
-		new EncodeInfo("ISO-8859-1", ""+'\0'),
-		new EncodeInfo("UTF-16", '\0'+""+'\0'),
-		new EncodeInfo("UTF-16BE", '\0'+""+'\0'),
-		new EncodeInfo("UTF-8", ""+'\0')};
+		new EncodeInfo("ISO-8859-1", "" + nil),
+		new EncodeInfo("UTF-16", nil + "" + nil),
+		new EncodeInfo("UTF-16BE", nil + "" + nil),
+		new EncodeInfo("UTF-8", "" + nil)};
 	
 	public static EncodeInfo getEncoding(byte i) { return encodings[i]; }
 	

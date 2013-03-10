@@ -40,25 +40,25 @@ public class ID3v23 {
 				case "RVRB": break; // Reverb
 				case "SYLT": break; // Synchronized lyric/text
 				case "SYTC": break; // Synchronized tempo codes
-				case "TALB": break; // Album/Movie/Show title
-				case "TBPM": break; // BPM (beats per minute)]
-				case "TCOM": break; // Composer
-				case "TCON": break; // Genres
-				case "TCOP": break; // Copyright message
-				case "TDAT": break; // Date
-				case "TDLY": break; // Playlist delay
-				case "TENC": break; // Encoded by
-				case "TEXT": break; // Lyricist/Text writer
+				case "TALB": /*ETextFrame*/ break; // Album/Movie/Show title
+				case "TBPM": /*ETextFrame*/ break; // BPM (beats per minute)]
+				case "TCOM": /*ID3Utils.split*//*ETextFrame*/ break; // Composer
+				case "TCON": /*ID3Utils.genres*//*ETextFrame*/ break; // Genres
+				case "TCOP": /*ETextFrame*/ break; // Copyright message
+				case "TDAT": /*ID3Utils.date*//*ETextFrame*/ break; // Date
+				case "TDLY": /*ETextFrame*/ break; // Playlist delay
+				case "TENC": /*ETextFrame*/ break; // Encoded by
+				case "TEXT": /*ID3Utils.split*//*ETextFrame*/ break; // Lyricist/Text writer
 				case "TFLT": break; // File type
-				case "TIME": break; // Time
-				case "TIT1": break; // Content group description
-				case "TIT2": break; // Title/songname/content description
-				case "TIT3": break; // Subtitle/Description refinement
-				case "TKEY": break; // Initial key
+				case "TIME": /*ID3Utils.time*//*ETextFrame*/ break; // Time
+				case "TIT1": /*ETextFrame*/ break; // Content group description
+				case "TIT2": /*ETextFrame*/ break; // Title/songname/content description
+				case "TIT3": /*ETextFrame*/ break; // Subtitle/Description refinement
+				case "TKEY": /*ETextFrame*/ break; // Initial key
 				case "TLAN": break; // Language(s)
-				case "TLEN": break; // Length
+				case "TLEN": /*ETextFrame*/ break; // Length
 				case "TMED": break; // Media type
-				case "TOAL": break; // Original album/movie/show title
+				case "TOAL": /*ETextFrame*/ break; // Original album/movie/show title
 				case "TOFN": break; // Original filename
 				case "TOLY": break; // Original lyricist(s)/text writer(s)
 				case "TOPE": break; // Original artist(s)/performer(s)

@@ -28,11 +28,11 @@ public class ID3v22 {
 
 				case "GEO": /*GEO*/ break; // General encapsulated object
 
-				case "IPL": /*IPL*/ break; // Involved people list
+				case "IPL": /*ETextFrame*/ break; // Involved people list
 
 				case "LNK": /*LNK*/ break; // Linked information
 
-				case "MCI": /*MIC*/ break; // Music CD Identifier
+				case "MCI": /*TextFrame*/ break; // Music CD Identifier
 				case "MLL": /*MLL*/ break; // MPEG location lookup table
 
 				case "PIC": /*PIC*/ break; // Attached picture
@@ -44,52 +44,52 @@ public class ID3v22 {
 				case "SLT": /*SLT*/ break; // Synchronized lyric/text
 				case "STC": /*STC*/ break; // Synced tempo codes
 
-				case "TAL": /*T__*/ break; // Album/Movie/Show title
-				case "TBP": /*T__*/ break; // BPM (Beats Per Minute)
-				case "TCM": /*TCM*/ break; // Composer
-				case "TCO": /*TCO*/ break; // Genres
-				case "TCR": /*T__*/ break; // Copyright message
-				case "TDA": /*TDA*/ break; // Date
-				case "TDY": /*T__*/ break; // Playlist delay (silence between songs)
-				case "TEN": /*T__*/ break; // Encoded by
+				case "TAL": /*ETextFrame*/ break; // Album/Movie/Show title
+				case "TBP": /*ETextFrame*/ break; // BPM (Beats Per Minute)
+				case "TCM": /*ID3Utils.split*//*T__*/ break; // Composer
+				case "TCO": /*ID3Utils.genres*//*T__*/ break; // Genres
+				case "TCR": /*ETextFrame*/ break; // Copyright message
+				case "TDA": /*ID3Utils.date*//*T__*/ break; // Date
+				case "TDY": /*ETextFrame*/ break; // Playlist delay (silence between songs)
+				case "TEN": /*ETextFrame*/ break; // Encoded by
 				case "TFT": /*TFT*/ break; // File type
-				case "TIM": /*TIM*/ break; // Time
-				case "TKE": /*T__*/ break; // Initial key // jtag.reference.MusicalKey
+				case "TIM": /*ID3Utils.time*//*T__*/ break; // Time
+				case "TKE": /*ETextFrame*/ break; // Initial key // jtag.reference.MusicalKey
 				case "TLA": /*TLA*/ break; // Language(s)
-				case "TLE": /*T__*/ break; // Length in ms
+				case "TLE": /*ETextFrame*/ break; // Length in ms
 				case "TMT": /*TMT*/ break; // Media type
-				case "TOA": /*TOA*/ break; // Original artist(s)/performer(s)
-				case "TOF": /*T__*/ break; // Original filename
-				case "TOL": /*TOL*/ break; // Original Lyricist(s)/text writer(s)
-				case "TOR": /*T__*/ break; // Original release year
-				case "TOT": /*T__*/ break; // Original album/Movie/Show title
-				case "TP1": /*T__*/ break; // Lead artist(s)/Lead performer(s)/Soloist(s)/Performing group
-				case "TP2": /*T__*/ break; // Band/Orchestra/Accompaniment
-				case "TP3": /*T__*/ break; // Conductor/Performer refinement
-				case "TP4": /*T__*/ break; // Interpreted, remixed, or otherwise modified by
-				case "TPA": /*T__*/ break; // Part of a set
-				case "TPB": /*T__*/ break; // Publisher
-				case "TRC": /*T__*/ break; // ISRC (International Standard Recording Code)
-				case "TRD": /*T__*/ break; // Recording dates
-				case "TRK": /*T__*/ break; // Track number/Position in set
-				case "TSI": /*T__*/ break; // Size in bytes
-				case "TSS": /*T__*/ break; // Software/hardware and settings used for encoding
-				case "TT1": /*T__*/ break; // Content group description
-				case "TT2": /*T__*/ break; // Title/Songname/Content description
-				case "TT3": /*T__*/ break; // Subtitle/Description refinement
-				case "TXT": /*TXT*/ break; // Lyricist/text writer
+				case "TOA": /*ID3Utils.split*//*T__*/ break; // Original artist(s)/performer(s)
+				case "TOF": /*ETextFrame*/ break; // Original filename
+				case "TOL": /*ID3Utils.split*//*T__*/ break; // Original Lyricist(s)/text writer(s)
+				case "TOR": /*ETextFrame*/ break; // Original release year
+				case "TOT": /*ETextFrame*/ break; // Original album/Movie/Show title
+				case "TP1": /*ETextFrame*/ break; // Lead artist(s)/Lead performer(s)/Soloist(s)/Performing group
+				case "TP2": /*ETextFrame*/ break; // Band/Orchestra/Accompaniment
+				case "TP3": /*ETextFrame*/ break; // Conductor/Performer refinement
+				case "TP4": /*ETextFrame*/ break; // Interpreted, remixed, or otherwise modified by
+				case "TPA": /*ETextFrame*/ break; // Part of a set
+				case "TPB": /*ETextFrame*/ break; // Publisher
+				case "TRC": /*ETextFrame*/ break; // ISRC (International Standard Recording Code)
+				case "TRD": /*ETextFrame*/ break; // Recording dates
+				case "TRK": /*ETextFrame*/ break; // Track number/Position in set
+				case "TSI": /*ETextFrame*/ break; // Size in bytes
+				case "TSS": /*ETextFrame*/ break; // Software/hardware and settings used for encoding
+				case "TT1": /*ETextFrame*/ break; // Content group description
+				case "TT2": /*ETextFrame*/ break; // Title/Songname/Content description
+				case "TT3": /*ETextFrame*/ break; // Subtitle/Description refinement
+				case "TXT": /*ID3Utils.split*//*T__*/ break; // Lyricist/text writer
 				case "TXX": /*TXX*/ break; // User defined text information frame
-				case "TYE": /*T__*/ break; // Year
+				case "TYE": /*ETextFrame*/ break; // Year
 
 				case "UFI": /*UFI*/ break; // Unique file identifier
 				case "ULT": /*ULT*/ break; // Unsychronized lyric/text transcription
 
-				case "WAF": /*W__*/ break; // Official audio file webpage
-				case "WAR": /*W__*/ break; // Official artist/performer webpage
-				case "WAS": /*W__*/ break; // Official audio source webpage
-				case "WCM": /*W__*/ break; // Commercial information
-				case "WCP": /*W__*/ break; // Copyright/Legal information
-				case "WPB": /*W__*/ break; // Publishers official webpage
+				case "WAF": /*TextFrame*/ break; // Official audio file webpage
+				case "WAR": /*TextFrame*/ break; // Official artist/performer webpage
+				case "WAS": /*TextFrame*/ break; // Official audio source webpage
+				case "WCM": /*TextFrame*/ break; // Commercial information
+				case "WCP": /*TextFrame*/ break; // Copyright/Legal information
+				case "WPB": /*TextFrame*/ break; // Publishers official webpage
 				case "WXX": /*WXX*/ break; // User defined URL link frame
 			}
 		}

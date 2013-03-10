@@ -1,13 +1,10 @@
-package jtag.tags.id3v2.v2.io;
+package jtag.tags.id3v2.io;
 
-import java.io.IOException;
+import java.util.Date;
 
-import jtag.io.Parseable;
-
-public class TCO extends T__ {
-	public TCO(Parseable p) throws IOException { super(p); }
-	
-	public String [] genres() {
+public class ID3Utils {
+	/** TCO, TCON */
+	public String [] genres(String str) {
 //		   The content type, which previously (in ID3v1.1, see appendix A) was
 //		   stored as a one byte numeric value only, is now a numeric string. You
 //		   may use one or several of the types as ID3v1.1 did or, since the
@@ -25,6 +22,25 @@ public class TCO extends T__ {
 //		   
 //		     RX  Remix
 //		     CR  Cover
-		return info.split("\\(([0-9]+|RX|CR)\\)([^(]*)?");
+		return str.split("\\(([0-9]+|RX|CR)\\)([^(]*)?");
 	}
+	
+	/** TDA, TDAT */
+	public Date date(String str) {
+		int day = Integer.getInteger(str.substring(0, 1));
+		int month = Integer.getInteger(str.substring(2, 3));		
+		return new Date(0, month, day);
+//		java.util.Calendar c = java.util.Calendar.getInstance();
+//		c.set(0, month, day);
+	}
+	
+	/** TIM, TIME */
+	public Date time(String str) {
+		int hours = Integer.getInteger(str.substring(0, 1));
+		int minutes = Integer.getInteger(str.substring(2, 3));		
+		return new Date(0, 0, 0, hours, minutes);
+	}
+	
+	/** TCM , TOA, TOL, TXT */
+	public String [] split(String str) { return str.split("/");	}
 }

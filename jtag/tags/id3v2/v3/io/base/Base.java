@@ -1,10 +1,10 @@
-package jtag.tags.id3v2.v3.io;
+package jtag.tags.id3v2.v3.io.base;
 
 import java.io.IOException;
 
 import jtag.io.Parseable;
 
-public class Frame {
+public class Base {
 	public int length;
 	public boolean tag_preservation; //tells the software what to do with this frame if it is unknown and the tag is altered in any way. This applies to all kinds of alterations, including adding more padding and reordering the frames. 
 	public boolean file_preservation; // tells the software what to do with this frame if it is unknown and the file, excluding the tag, is altered. This does not apply when the audio is completely replaced with other audio data. 
@@ -18,7 +18,7 @@ public class Frame {
 //	in the same order as the flags indicating the additions. I.e. the four bytes of decompressed size will precede the encryption method byte.
 //	These additions to the frame header, while not included in the frame header size but are included in the 'frame size' field, are not subject to encryption or compression. 	
 	
-	public Frame(Parseable p) throws IOException {
+	public Base(Parseable p) throws IOException {
 		length = p.UBEInt();
 		
 		byte flag = p.Byte();
