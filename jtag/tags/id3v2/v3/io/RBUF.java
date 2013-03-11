@@ -1,12 +1,12 @@
-package jtag.tags.id3v2.v2.io;
+package jtag.tags.id3v2.v3.io;
 
 import java.io.IOException;
 
 import jtag.io.Parseable;
-import jtag.tags.id3v2.v2.io.base.Frame;
+import jtag.tags.id3v2.v3.io.base.Base;
 
-public class BUF extends Frame {	
-	public BUF(Parseable p) throws IOException { 
+public class RBUF extends Base {	
+	public RBUF(Parseable p) throws IOException { 
 		super(p);
 		p.skip(length);
 

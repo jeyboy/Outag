@@ -6,9 +6,6 @@ import jtag.io.Parseable;
 import jtag.tags.id3v2.v2.io.base.Frame;
 
 public class RVA extends Frame {
-	public String preview;
-	public String fullText;
-	
 	public RVA(Parseable p) throws IOException { 
 		super(p);
 		p.skip(length);

@@ -5,7 +5,7 @@ import jtag.tags.id3v2.io.Encodings;
 import jtag.io.Parseable;
 
 public class EFrame extends Base {
-	Encodings.EncodeInfo encInfo;
+	public Encodings.EncodeInfo encInfo;
 	
 	public EFrame(Parseable p) throws IOException {
 		super(p);
